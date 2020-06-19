@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import application from "@/components/application";
-import notifications from "@/components/notifications";
-import deck from "@/components/deck";
-import display from "@/components/display";
+import application from "@/components/ui/application";
+import notifications from "@/components/ui/notifications";
+import deck from "@/components/ui/deck";
+import display from "@/components/ui/display";
 
 export default {
   name: "Main",
@@ -29,28 +29,28 @@ export default {
         {
           name: "Instagram",
           icon: "instagram.png",
-          launch: "https://instagram.com",
+          launch: "https://instagram.com/oscarrc_web",
           native: false,
           decked: true
         },
         {
           name: "Github",
           icon: "github.png",
-          launch: "https://github.com",
+          launch: "https://github.com/oscarrc_web",
           native: false,
           decked: true
         },
         {
           name: "Twitter",
           icon: "twitter.png",
-          launch: "https://twitter.com",
+          launch: "https://twitter.com/oscarrc_web",
           native: false,
           decked: true
         },
         {
           name: "Linkedin",
           icon: "linkedin.png",
-          launch: "https://linkedin.com",
+          launch: "https://www.linkedin.com/in/oscarrc-web",
           native: false,
           decked: true
         },
@@ -71,7 +71,7 @@ export default {
         {
           name: "Portfolio",
           icon: "portfolio.png",
-          launch: "/porfolio",
+          launch: "/portfolio",
           native: true,
           decked: false
         },
@@ -96,6 +96,9 @@ export default {
         return !a.decked;
       });
     }
+  },
+  created() {
+    if (this.$route.meta.app) this.$store.commit("toggleApp");
   }
 };
 </script>

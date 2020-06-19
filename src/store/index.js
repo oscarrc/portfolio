@@ -6,14 +6,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isOpen: false,
-    isNative: false,
-    launchCommand: ""
+    settings: {
+      dark: false,
+      language: "ES",
+      background: null
+    }
   },
   mutations: {
-    toggleApp(state, launch, native) {
+    toggleApp(state) {
       state.isOpen = !state.isOpen;
-      state.isNative = native;
-      state.launchCommand = launch;
     }
   },
   actions: {},

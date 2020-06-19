@@ -1,4 +1,7 @@
 
+#notifications{
+    z-index: 1000;
+}
 
 #screen{
     background-image: url("/img/bg.jpg");
@@ -6,10 +9,11 @@
 }
 
 .icon span{
-    color: white
+    color: white;
+    font-size: 1rem;
 }
 
-.icon{
+.icon, .icon .v-badge{
     cursor: pointer;
     max-width: 100%;
     width: 60px
@@ -22,13 +26,47 @@
 }
 
 @media (min-width: 600px){
-    .icon{
+    .icon, .icon .v-badge{
         width: 75px;
+    }
+
+    .icon span{
+        font-size: 1rem;
     }
 }
 
 @media (min-width: 1264px){
-    .icon{
+    .icon, .icon .v-badge{
         width: 100px;
     }
+
+    .icon span{
+        font-size: 1rem;
+    }
+}
+
+#bar{
+    position: fixed;
+    z-index: 100;
+}
+
+#bar .action{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.app-row{
+    padding-top: 64px;
+}
+
+@media (min-width: 960px){
+    .app-row{
+        padding-top: 120px;
+    }
+}
+
+.text-white{
+    color: white;
 }

@@ -1,7 +1,6 @@
 <template>
   <v-dialog fullscreen :value="isOpen">
-    <router-view v-if="isNative"></router-view>
-    <iframe v-if="!isNative" style="width:100%" :src="launchCommand"></iframe>
+    <router-view></router-view>
   </v-dialog>
 </template>
 
@@ -9,7 +8,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "icon",
+  name: "application",
   computed: {
     ...mapState(["isOpen", "isNative", "launchCommand"])
   },
