@@ -1,0 +1,34 @@
+
+
+#screen{
+    background-image: url("/img/bg.jpg");
+    background-size: cover;
+}
+
+.icon span{
+    color: white
+}
+
+.icon{
+    cursor: pointer;
+    max-width: 100%;
+    width: 60px
+}
+
+#deck .deckedApps{
+    position: absolute;
+    max-width: 100vw;
+    bottom: 40%;
+}
+
+@media (min-width: 600px){
+    .icon{
+        width: 75px;
+    }
+}
+
+@media (min-width: 1264px){
+    .icon{
+        width: 100px;
+    }
+}
