@@ -1,7 +1,13 @@
 <template>
   <v-card tile id="app-card">
-    <bar name="About" color="red" action="Download" @clicked="handleAction" />
-    <navigation />
+    <bar
+      :name="app.name"
+      :color="app.color"
+      :actions="app.actions"
+      action="Download"
+    >
+    </bar>
+    <navigation :color="app.color" :sections="app.sections || []" />
     <wrapper>
       <v-col cols="12" md="4" class="px-0">
         <v-card class="mx-auto" tile>
@@ -200,6 +206,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import bar from "@/components/apps/bar";
 import navigation from "@/components/apps/navigation";
 import wrapper from "@/components/apps/wrapper";
@@ -215,6 +223,9 @@ export default {
     return {
       open: [0]
     };
+  },
+  computed: {
+    ...mapState(["app"])
   },
   methods: {
     handleAction() {

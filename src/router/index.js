@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store";
 import Main from "@/views/main";
 import About from "@/views/apps/about";
 import Contact from "@/views/apps/contact";
@@ -46,6 +47,14 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.afterEach(to => {
+  if (to.meta.app) {
+    store.dispatch("launchApp", to.name);
+  } else {
+    store.commit("closeApp");
+  }
 });
 
 export default router;

@@ -1,9 +1,9 @@
 <template>
-  <v-navigation-drawer id="app-navigation" value="true" persistent app>
+  <v-navigation-drawer id="app-navigation" persistent app>
     <v-list nav dense>
       <v-list-item-group
         value="true"
-        active-class="deep-purple--text text--accent-4"
+        :active-class="color + '--text text--accent-4'"
       >
         <v-list-item>
           <v-list-item-icon>
@@ -26,7 +26,16 @@
 <script>
 export default {
   name: "navigation",
-  props: {},
+  props: {
+    color: {
+      type: String,
+      required: true
+    },
+    sections: {
+      type: Array,
+      required: true
+    }
+  },
   methods: {}
 };
 </script>

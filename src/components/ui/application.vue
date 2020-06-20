@@ -1,5 +1,5 @@
 <template>
-  <v-dialog id="app" fullscreen v-model="isOpen">
+  <v-dialog id="app" fullscreen :value="launched">
     <slot></slot>
   </v-dialog>
 </template>
@@ -8,7 +8,7 @@
 export default {
   name: "application",
   props: {
-    isOpen: {
+    launched: {
       type: Boolean,
       required: true
     }
