@@ -1,17 +1,17 @@
 <template>
-  <v-dialog fullscreen :value="isOpen">
-    <router-view></router-view>
+  <v-dialog id="app" fullscreen v-model="isOpen">
+    <slot></slot>
   </v-dialog>
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "application",
-  computed: {
-    ...mapState(["isOpen", "isNative", "launchCommand"])
-  },
-  props: {}
+  props: {
+    isOpen: {
+      type: Boolean,
+      required: true
+    }
+  }
 };
 </script>

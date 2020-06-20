@@ -1,21 +1,22 @@
 <template>
-  <v-card tile class="app">
-    <bar
-      name="Portfolio"
-      color="purple accent-4"
-      action="Filter"
-      @clicked="handleAction"
-    />
+  <v-card tile id="app-card">
+    <bar name="About" color="red" action="Download" @clicked="handleAction" />
+    <navigation />
+    <wrapper></wrapper>
   </v-card>
 </template>
 
 <script>
 import bar from "@/components/apps/bar";
+import navigation from "@/components/apps/navigation";
+import wrapper from "@/components/apps/wrapper";
 
 export default {
   name: "Portfolio",
   components: {
-    bar
+    bar,
+    navigation,
+    wrapper
   },
   methods: {
     handleAction() {}

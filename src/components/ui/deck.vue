@@ -3,7 +3,7 @@
     <v-card width="100%" color="rgba(255, 255, 255, 0.2)" class="text-center">
       <v-container fluid class="deckedApps">
         <v-row class="justify-space-around align-start">
-          <icon v-for="(app, index) in apps" :key="index" :app="app" />
+          <slot></slot>
         </v-row>
       </v-container>
       <v-divider class="mt-15"></v-divider>
@@ -21,17 +21,7 @@
 </template>
 
 <script>
-import icon from "@/components/shared/icon";
 export default {
-  name: "deck",
-  props: {
-    apps: {
-      type: Array,
-      required: true
-    }
-  },
-  components: {
-    icon
-  }
+  name: "deck"
 };
 </script>

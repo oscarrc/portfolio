@@ -29,7 +29,6 @@ export default {
       let date = new Date();
       this.hours = (date.getHours() < 10 ? "0" : "") + date.getHours();
       this.minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
-      console.log(1);
     }
   },
   mounted: function() {

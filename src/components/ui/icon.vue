@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="3" class="d-flex justify-center text-center" @click="open">
+  <v-col cols="3" class="d-flex justify-center text-center" @click="clicked">
     <v-sheet class="icon" color="transparent">
       <v-badge v-model="notifications" content="1" color="red" overlap>
         <v-img contain class="mb-4 pa-1" :src="'/img/' + app.icon"></v-img>
@@ -12,10 +12,10 @@
 <script>
 export default {
   name: "icon",
-  data(){
+  data() {
     return {
       notifications: false
-    }
+    };
   },
   props: {
     app: {
@@ -46,13 +46,8 @@ export default {
     }
   },
   methods: {
-    open() {
-      if (this.app.native) {
-        this.$router.push(this.app.launch);
-        this.$store.commit("toggleApp");
-      } else {
-        window.open(this.app.launch, "_blank");
-      }
+    clicked() {
+      this.$emit("click", this.app);
     }
   }
 };

@@ -1,11 +1,27 @@
 <template>
   <v-app>
-    <notifications />
-    <v-main width="100vw" class="pa-0">
-      <display :apps="undeckedApps" />
-      <application />
+    <notifications></notifications>
+    <v-main class="pa-0">
+      <display>
+        <icon
+          v-for="(app, index) in undeckedApps"
+          :key="index"
+          :app="app"
+          @click="launchApp"
+        />
+      </display>
+      <application :isOpen="isApp" :app="activeApp">
+        <router-view></router-view>
+      </application>
     </v-main>
-    <deck :apps="deckedApps" />
+    <deck>
+      <icon
+        v-for="(app, index) in deckedApps"
+        :key="index"
+        :app="app"
+        @click="launchApp"
+      />
+    </deck>
   </v-app>
 </template>
 
@@ -14,6 +30,7 @@ import application from "@/components/ui/application";
 import notifications from "@/components/ui/notifications";
 import deck from "@/components/ui/deck";
 import display from "@/components/ui/display";
+import icon from "@/components/ui/icon";
 
 export default {
   name: "Main",
@@ -21,10 +38,13 @@ export default {
     application,
     notifications,
     display,
-    deck
+    deck,
+    icon
   },
   data() {
     return {
+      isOpen: false,
+      activeApp: null,
       apps: [
         {
           name: "Instagram",
@@ -59,28 +79,32 @@ export default {
           icon: "about.png",
           launch: "/about",
           native: true,
-          decked: false
-        },
-        {
-          name: "Contact",
-          icon: "contact.png",
-          launch: "/contact",
-          native: true,
-          decked: false
+          decked: false,
+          color: "light-blue accent-4"
         },
         {
           name: "Portfolio",
           icon: "portfolio.png",
           launch: "/portfolio",
           native: true,
-          decked: false
+          decked: false,
+          color: "purple accent-4"
+        },
+        {
+          name: "Contact",
+          icon: "contact.png",
+          launch: "/contact",
+          native: true,
+          decked: false,
+          color: "light-green accent-4"
         },
         {
           name: "Settings",
           icon: "settings.png",
           launch: "/settings",
           native: true,
-          decked: false
+          decked: false,
+          color: "blue-grey darken-3"
         }
       ]
     };
@@ -95,13 +119,25 @@ export default {
       return this.apps.filter(a => {
         return !a.decked;
       });
+    },
+    isApp: function() {
+      return this.$route.meta.app ? true : false;
+    }
+  },
+  methods: {
+    launchApp(app) {
+      if (app.native) {
+        this.activeApp = app;
+        this.$router.push(app.launch);
+      } else {
+        window.open(app.launch, "_blank");
+      }
     }
   },
   created() {
-    if (this.$route.meta.app) this.$store.commit("toggleApp");
+    if (this.isApp) {
+      this.activeApp = this.apps.find(a => a.name == this.$route.name);
+    }
   }
 };
 </script>
-<style>
-@import url("../assets/css/style.css");
-</style>

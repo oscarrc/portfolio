@@ -1,21 +1,32 @@
 <template>
-  <v-toolbar
-    id="bar"
-    width="100%"
-    height="auto"
-    class="pt-6"
-    dark
+  <v-app-bar
+    id="app-bar"
+    class="py-3"
+    height="80px"
+    absolute
+    elevate-on-scroll
+    scroll-target="#app-wrapper"
     :color="color"
+    dark
   >
-    <v-btn icon dark @click="close">
-      <v-icon>mdi-close</v-icon>
-    </v-btn>
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
     <v-toolbar-title>{{ name }}</v-toolbar-title>
+
     <v-spacer></v-spacer>
-    <v-toolbar-items v-if="action" class="action">
-      <v-btn dark text @click="clicked">{{ action }}</v-btn>
-    </v-toolbar-items>
-  </v-toolbar>
+
+    <v-btn icon>
+      <v-icon>mdi-magnify</v-icon>
+    </v-btn>
+
+    <v-btn icon>
+      <v-icon>mdi-heart</v-icon>
+    </v-btn>
+
+    <v-btn icon>
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
+  </v-app-bar>
 </template>
 
 <script>
@@ -30,10 +41,18 @@ export default {
       type: String,
       required: true
     },
-    action: {
-      type: String,
-      required: false
-    }
+    actions: [
+      {
+        name: {
+          type: String,
+          required: true
+        },
+        icon: {
+          type: String,
+          required: true
+        }
+      }
+    ]
   },
   methods: {
     close() {
