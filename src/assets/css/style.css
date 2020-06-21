@@ -77,3 +77,11 @@
         font-size: 1rem;
     }
 }
+
+.fullscreen{
+    height: 100vh;
+}
+
+.menu-item{
+    cursor: pointer;
+}

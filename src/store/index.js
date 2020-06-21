@@ -46,14 +46,43 @@ export default new Vuex.Store({
         launch: "/about",
         native: true,
         decked: false,
-        color: "light-blue"
-        // actions: [
-        //   //TODO por qué hay un error
-        //   {
-        //     name: "Download",
-        //     icon: "mdi-download"
-        //   }
-        // ]
+        color: "light-blue",
+        actions: [
+          {
+            name: "Download",
+            icon: "mdi-download"
+          },
+          {
+            name: "Download",
+            icon: "mdi-download"
+          }
+        ],
+        sections: [
+          {
+            name: "Personal profile",
+            icon: "mdi-account"
+          },
+          {
+            name: "Education history",
+            icon: "mdi-school"
+          },
+          {
+            name: "Work Experience",
+            icon: "mdi-briefcase"
+          },
+          {
+            name: "Areas of expertise",
+            icon: "mdi-code-tags-check"
+          },
+          {
+            name: "Other skills",
+            icon: "mdi-code-tags"
+          },
+          {
+            name: "Languages",
+            icon: "mdi-web"
+          }
+        ]
       },
       {
         name: "Portfolio",
@@ -61,7 +90,27 @@ export default new Vuex.Store({
         launch: "/portfolio",
         native: true,
         decked: false,
-        color: "purple"
+        color: "purple",
+        actions: [
+          {
+            name: "Filter",
+            icon: "mdi-filter"
+          }
+        ],
+        sections: [
+          {
+            name: "All",
+            icon: "mdi-check-circle-outline"
+          },
+          {
+            name: "Frontend",
+            icon: "mdi-xml"
+          },
+          {
+            name: "Backend",
+            icon: "mdi-code-braces"
+          }
+        ]
       },
       {
         name: "Contact",
@@ -69,7 +118,21 @@ export default new Vuex.Store({
         launch: "/contact",
         native: true,
         decked: false,
-        color: "light-green"
+        color: "light-green",
+        sections: [
+          {
+            name: "Inbox",
+            icon: "mdi-inbox"
+          },
+          {
+            name: "Sent",
+            icon: "mdi-send-outline"
+          },
+          {
+            name: "Trash",
+            icon: "mdi-trash-can-outline"
+          }
+        ]
       },
       {
         name: "Settings",
@@ -77,7 +140,31 @@ export default new Vuex.Store({
         launch: "/settings",
         native: true,
         decked: false,
-        color: "blue-grey"
+        color: "blue-grey",
+        actions: [
+          {
+            name: "Save",
+            icon: "mdi-content-save"
+          }
+        ],
+        sections: [
+          {
+            name: "Display",
+            icon: "mdi-monitor"
+          },
+          {
+            name: "Language",
+            icon: "mdi-translate"
+          },
+          {
+            name: "Licenses",
+            icon: "mdi-license"
+          },
+          {
+            name: "Factory reset",
+            icon: "mdi-undo-variant"
+          }
+        ]
       }
     ],
     launched: false,

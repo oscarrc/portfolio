@@ -1,22 +1,12 @@
 <template>
-  <v-navigation-drawer id="app-navigation" persistent app>
+  <v-navigation-drawer id="app-navigation" :value="status" persistent app>
     <v-list nav dense>
-      <v-list-item-group
-        value="true"
-        :active-class="color + '--text text--accent-4'"
-      >
-        <v-list-item>
+      <v-list-item-group :active-class="color + '--text text--accent-4'">
+        <v-list-item v-for="section in sections" :key="section.name">
           <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>{{ section.icon }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Home</v-list-item-title>
-        </v-list-item>
-
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Account</v-list-item-title>
+          <v-list-item-title>{{ section.name }}</v-list-item-title>
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -33,6 +23,10 @@ export default {
     },
     sections: {
       type: Array,
+      required: true
+    },
+    status: {
+      type: Boolean,
       required: true
     }
   },

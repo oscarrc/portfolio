@@ -1,13 +1,12 @@
 <template>
   <v-card tile id="app-card">
-    <bar
-      :name="app.name"
+    <bar :name="app.name" :color="app.color" :actions="app.actions"></bar>
+    <navigation
       :color="app.color"
-      :actions="app.actions"
-      action="Download"
+      :sections="app.sections || []"
+      :status="drawer"
     >
-    </bar>
-    <navigation :color="app.color" :sections="app.sections || []" />
+    </navigation>
     <wrapper>
       <v-col cols="12" md="4" class="px-0">
         <v-card class="mx-auto" tile>
@@ -225,7 +224,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["app"])
+    ...mapState(["app", "drawer"])
   },
   methods: {
     handleAction() {
