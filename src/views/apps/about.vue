@@ -5,25 +5,29 @@
       :color="app.color"
       :sections="app.sections || []"
       :status="drawer"
+      :active="section"
     >
     </navigation>
     <wrapper>
-      <v-col cols="12" md="4" class="px-0">
+      <v-col cols="12" md="8" class="px-0">
         <v-card class="mx-auto" tile>
           <v-img
             height="100%"
+            max-height="20vh"
             src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
           >
-            <v-row align="end" class="fill-height">
-              <v-col align-self="start" cols="12">
+            <v-row class="fill-height">
+              <v-col class="d-flex" align-self="start">
                 <v-avatar class="profile" color="grey" size="164" tile>
                   <v-img
                     src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
                   ></v-img>
                 </v-avatar>
-              </v-col>
-              <v-col class="py-0">
-                <v-list-item color="rgba(0, 0, 0, .4)" dark>
+                <v-list-item
+                  color="rgba(0, 0, 0, .4)"
+                  dark
+                  class="align-self-end"
+                >
                   <v-list-item-content>
                     <v-list-item-title class="title">
                       Oscar R.C.
@@ -36,7 +40,7 @@
               </v-col>
             </v-row>
           </v-img>
-          <v-expansion-panels accordion :value="0">
+          <v-expansion-panels accordion :value="section">
             <v-expansion-panel>
               <v-expansion-panel-header>
                 Personal Profile
@@ -45,18 +49,6 @@
                 I'm young and proactive web developer based in Galicia, Spain.
                 I'm I'm looking forward to improve my skills and learn from
                 others order to make a career on what I love.
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                Areas of Expertise
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <ul>
-                  <li>HTML 5, CSS3 and Javascript</li>
-                  <li>LAMP Stack (Linux, Apache, Mysql and PHP)</li>
-                  <li>MEAN Stack (Mongo, Express, Angular and Node)</li>
-                </ul>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
@@ -85,37 +77,6 @@
                 </ul>
               </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                Other Skills
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <ul>
-                  <li>Basic knowledge of React and Vue frameworks</li>
-                  <li>
-                    Basic knowledge of JAVA and C# programming languages
-                  </li>
-                  <li>Linux server administration</li>
-                </ul>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                Languages
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <ul>
-                  <li>Native Spanish speaker</li>
-                  <li>Advanced written and intermediate spoken English</li>
-                </ul>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="7" class="px-0">
-        <v-card tile elevation="2">
-          <v-expansion-panels accordion :value="0">
             <v-expansion-panel>
               <v-expansion-panel-header>
                 Work Experience
@@ -197,6 +158,43 @@
                 </v-timeline>
               </v-expansion-panel-content>
             </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                Areas of Expertise
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <ul>
+                  <li>HTML 5, CSS3 and Javascript</li>
+                  <li>LAMP Stack (Linux, Apache, Mysql and PHP)</li>
+                  <li>MEAN Stack (Mongo, Express, Angular and Node)</li>
+                </ul>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                Other Skills
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <ul>
+                  <li>Basic knowledge of React and Vue frameworks</li>
+                  <li>
+                    Basic knowledge of JAVA and C# programming languages
+                  </li>
+                  <li>Linux server administration</li>
+                </ul>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                Languages
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <ul>
+                  <li>Native Spanish speaker</li>
+                  <li>Advanced written and intermediate spoken English</li>
+                </ul>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
           </v-expansion-panels>
         </v-card>
       </v-col>
@@ -224,7 +222,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["app", "drawer"])
+    ...mapState(["app", "drawer", "section"])
   },
   methods: {
     handleAction() {

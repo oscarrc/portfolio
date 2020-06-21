@@ -169,6 +169,7 @@ export default new Vuex.Store({
     ],
     launched: false,
     drawer: true,
+    section: 0,
     app: {},
     settings: defaultSettings
   },
@@ -178,14 +179,19 @@ export default new Vuex.Store({
     },
     launchApp(state, app) {
       state.app = app;
+      state.section = 0;
       state.launched = true;
     },
     closeApp(state) {
       state.launched = false;
+      state.section = 0;
       state.app = {};
     },
     setSettings(state, settings) {
       state.settings = settings;
+    },
+    setSection(state, section) {
+      state.section = section;
     },
     resetSettings(state) {
       state.settings = defaultSettings;

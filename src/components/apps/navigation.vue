@@ -1,8 +1,16 @@
+/* eslint-disable prettier/prettier */
 <template>
   <v-navigation-drawer id="app-navigation" :value="status" persistent app>
     <v-list nav dense>
-      <v-list-item-group :active-class="color + '--text text--accent-4'">
-        <v-list-item v-for="section in sections" :key="section.name">
+      <v-list-item-group
+        :value="active"
+        :active-class="color + '--text text--accent-4'"
+      >
+        <v-list-item
+          v-for="(section, index) in sections"
+          :key="section.name"
+          @click="setActive(index)"
+        >
           <v-list-item-icon>
             <v-icon>{{ section.icon }}</v-icon>
           </v-list-item-icon>
@@ -28,8 +36,16 @@ export default {
     status: {
       type: Boolean,
       required: true
+    },
+    active: {
+      type: Number,
+      required: true
     }
   },
-  methods: {}
+  methods: {
+    setActive(index) {
+      this.$store.commit("setSection", index);
+    }
+  }
 };
 </script>
