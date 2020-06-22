@@ -222,7 +222,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["app", "drawer", "section"])
+    ...mapState("apps", ["app", "drawer", "section"])
   },
   methods: {
     handleAction() {

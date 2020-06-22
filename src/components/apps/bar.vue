@@ -66,7 +66,7 @@ export default {
       this.$router.push("/");
     },
     toggleDrawer() {
-      this.$store.commit("toggleDrawer");
+      this.$store.commit("apps/toggleDrawer", null, { root: true });
     }
   }
 };

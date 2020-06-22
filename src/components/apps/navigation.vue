@@ -3,6 +3,7 @@
   <v-navigation-drawer id="app-navigation" :value="status" persistent app>
     <v-list nav dense>
       <v-list-item-group
+        mandatory
         :value="active"
         :active-class="color + '--text text--accent-4'"
       >
@@ -44,7 +45,7 @@ export default {
   },
   methods: {
     setActive(index) {
-      this.$store.commit("setSection", index);
+      this.$store.commit("apps/setSection", index, { root: true });
     }
   }
 };

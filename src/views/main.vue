@@ -52,7 +52,7 @@ export default {
     icon
   },
   computed: {
-    ...mapState(["apps", "launched"])
+    ...mapState("apps", ["apps", "launched"])
   },
   methods: {
     launchApp(app) {
@@ -70,6 +70,9 @@ export default {
     closeApp() {
       this.$router.push("/");
     }
+  },
+  created() {
+    this.$store.dispatch("apps/getApps", null, { root: true });
   }
 };
 </script>

@@ -80,7 +80,7 @@ export default {
     wrapper
   },
   computed: {
-    ...mapState(["app", "drawer"])
+    ...mapState("apps", ["app", "drawer", "section"])
   },
   data() {
     return {
