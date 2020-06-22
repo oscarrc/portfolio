@@ -52,7 +52,7 @@ export default {
     icon
   },
   computed: {
-    ...mapState("apps", ["apps", "launched"])
+    ...mapState("apps", ["list", "launched"])
   },
   methods: {
     launchApp(app) {
@@ -63,16 +63,13 @@ export default {
       }
     },
     getApps(decked) {
-      return this.apps.filter(a => {
+      return this.list.filter(a => {
         return a.decked == decked;
       });
     },
     closeApp() {
       this.$router.push("/");
     }
-  },
-  created() {
-    this.$store.dispatch("apps/getApps", null, { root: true });
   }
 };
 </script>

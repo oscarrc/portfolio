@@ -5,6 +5,7 @@
       :color="app.color"
       :sections="app.sections || []"
       :status="drawer"
+      :active="section"
     >
     </navigation>
     <wrapper></wrapper>

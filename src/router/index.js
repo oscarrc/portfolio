@@ -49,6 +49,13 @@ const router = new VueRouter({
   routes
 });
 
+router.beforeEach(async (from, to, next) => {
+  if (store.state.apps.list.length == 0) {
+    await store.dispatch("apps/getApps", null, { root: true });
+  }
+  next();
+});
+
 router.afterEach(to => {
   if (to.meta.app) {
     store.dispatch("apps/launchApp", to.name, { root: true });

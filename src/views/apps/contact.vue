@@ -5,6 +5,7 @@
       :color="app.color"
       :sections="app.sections || []"
       :status="drawer"
+      :active="section"
     >
     </navigation>
     <wrapper>
@@ -85,7 +86,6 @@ export default {
   data() {
     return {
       from: "",
-      to: "oscarrc.web@gmail.com",
       subject: "",
       message: ""
     };

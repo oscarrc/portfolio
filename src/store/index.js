@@ -12,7 +12,8 @@ const defaultSettings = {
 
 export default new Vuex.Store({
   state: {
-    settings: defaultSettings
+    settings: defaultSettings,
+    loading: false
   },
   mutations: {},
   actions: {},

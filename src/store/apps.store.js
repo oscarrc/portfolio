@@ -3,7 +3,7 @@ import { appsService } from "@/services";
 export const apps = {
   namespaced: true,
   state: {
-    apps: [],
+    list: [],
     launched: false,
     drawer: true,
     section: 0,
@@ -24,20 +24,20 @@ export const apps = {
       state.app = {};
     },
     setApps(state, apps) {
-      state.apps = apps;
+      state.list = apps;
     },
     setSection(state, section) {
       state.section = section;
     }
   },
   actions: {
-    getApps({ commit }) {
-      appsService.getApps().then(apps => {
+    async getApps({ commit }) {
+      await appsService.getApps().then(apps => {
         commit("setApps", apps);
       });
     },
     launchApp({ state, commit }, name) {
-      let app = state.apps.find(a => {
+      let app = state.list.find(a => {
         return a.name == name;
       });
 
