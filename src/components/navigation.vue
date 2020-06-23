@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 <template>
   <v-navigation-drawer id="app-navigation" :value="status" persistent app>
     <v-list nav dense>

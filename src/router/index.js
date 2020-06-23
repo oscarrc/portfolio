@@ -9,17 +9,15 @@ const appRoutes = () => {
   const apps = require.context("@/apps", true, /config.js$/);
   return apps.keys().map(x => {
     let config = require("@/apps" + x.substr(1)).default;
-    if (config.native) {
-      return {
-        path: config.path,
-        name: config.name,
-        component: () =>
-          import(`@/apps${x.substr(1).replace("config.js", "index")}`),
-        meta: {
-          native: config.native
-        }
-      };
-    }
+    return {
+      path: config.path,
+      name: config.name,
+      component: () =>
+        import(`@/apps${x.substr(1).replace("config.js", "index")}`),
+      meta: {
+        native: config.native
+      }
+    };
   });
 };
 
