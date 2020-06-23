@@ -3,5 +3,25 @@ export default {
   path: "/portfolio",
   native: true,
   decked: false,
-  color: "purple"
+  color: "purple",
+  actions: [
+    {
+      name: "Filter",
+      icon: "mdi-filter"
+    }
+  ],
+  sections: [
+    {
+      name: "All",
+      icon: "mdi-inbox"
+    },
+    {
+      name: "Backend",
+      icon: "mdi-code-braces"
+    },
+    {
+      name: "Frontend",
+      icon: "mdi-xml"
+    }
+  ]
 };

@@ -19,11 +19,9 @@ const db = firebase.firestore();
 const storage = firebase.storage();
 
 const apps = db.collection("apps");
-const icons = storage.ref("icons");
 
 export default {
   db,
   apps,
-  icons,
   storage
 };

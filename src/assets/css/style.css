@@ -84,3 +84,8 @@
 .menu-item{
     cursor: pointer;
 }
+
+.v-btn--fab.v-size--default.v-btn--absolute.v-btn--bottom{
+    bottom: 16px;
+    z-index: 500;
+}

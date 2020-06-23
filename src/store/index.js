@@ -8,15 +8,7 @@ const appList = () => {
 
   return apps.keys().map(x => {
     let config = require("@/apps" + x.substr(1)).default;
-
-    config = {
-      path: config.path,
-      name: config.name,
-      decked: config.decked,
-      native: config.native,
-      color: config.color,
-      icon: `${x.substr(1).replace("config.js", "")}icon.png`
-    };
+    config.icon = `${x.substr(1).replace("config.js", "")}icon.png`;
     return config;
   });
 };
@@ -66,7 +58,6 @@ const store = new Vuex.Store({
       app.substring(app.indexOf("/") + 1, app.lastIndexOf("/")),
       require(`@/apps${app.substr(1)}`).default
     );
-    console.log(store);
   });
 })();
 
