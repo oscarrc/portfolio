@@ -38,10 +38,10 @@
 <script>
 import { mapState } from "vuex";
 
-import notifications from "@/components/ui/notifications";
-import deck from "@/components/ui/deck";
-import display from "@/components/ui/display";
-import icon from "@/components/ui/icon";
+import notifications from "@/components/notifications";
+import deck from "@/components/deck";
+import display from "@/components/display";
+import icon from "@/components/icon";
 
 export default {
   name: "Main",
@@ -57,9 +57,9 @@ export default {
   methods: {
     launchApp(app) {
       if (app.native) {
-        this.$router.push(app.launch);
+        this.$router.push(app.path);
       } else {
-        window.open(app.launch, "_blank");
+        window.open(app.path, "_blank");
       }
     },
     getApps(decked) {

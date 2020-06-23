@@ -2,44 +2,33 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@/store";
 import Main from "@/views/main";
-import About from "@/views/apps/about";
-import Contact from "@/views/apps/contact";
-import Portfolio from "@/views/apps/portfolio";
-import Settings from "@/views/apps/settings";
 
 Vue.use(VueRouter);
+
+const appRoutes = () => {
+  const apps = require.context("@/apps", true, /config.js$/);
+  return apps.keys().map(x => {
+    let config = require("@/apps" + x.substr(1)).default;
+    if (config.native) {
+      return {
+        path: config.path,
+        name: config.name,
+        component: () =>
+          import(`@/apps${x.substr(1).replace("config.js", "index")}`),
+        meta: {
+          native: config.native
+        }
+      };
+    }
+  });
+};
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Main,
-    children: [
-      {
-        path: "/about",
-        name: "About",
-        component: About,
-        meta: { app: true }
-      },
-      {
-        path: "/contact",
-        name: "Contact",
-        component: Contact,
-        meta: { app: true }
-      },
-      {
-        path: "/portfolio",
-        name: "Portfolio",
-        component: Portfolio,
-        meta: { app: true }
-      },
-      {
-        path: "/settings",
-        name: "Settings",
-        component: Settings,
-        meta: { app: true }
-      }
-    ]
+    children: appRoutes()
   }
 ];
 
@@ -49,15 +38,8 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach(async (from, to, next) => {
-  if (store.state.apps.list.length == 0) {
-    await store.dispatch("apps/getApps", null, { root: true });
-  }
-  next();
-});
-
 router.afterEach(to => {
-  if (to.meta.app) {
+  if (to.meta.native) {
     store.dispatch("apps/launchApp", to.name, { root: true });
   } else {
     store.commit("apps/closeApp");

@@ -1,0 +1,13 @@
+<template>
+  <v-container id="screen" fluid class="py-5 align-start" fill-height>
+    <v-row class="justify-space-around align-start mt-10">
+      <slot></slot>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+export default {
+  name: "display"
+};
+</script>

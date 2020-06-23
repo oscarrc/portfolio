@@ -1,9 +1,27 @@
 import { appsService } from "@/services";
 
+const appList = () => {
+  const apps = require.context("@/apps", true, /config.js$/);
+
+  return apps.keys().map(x => {
+    let config = require("@/apps" + x.substr(1)).default;
+
+    config = {
+      path: config.path,
+      name: config.name,
+      decked: config.decked,
+      native: config.native,
+      color: config.color,
+      icon: `@/apps${x.substr(1).replace("config.js", "")}icon.png`
+    };
+    return config;
+  });
+};
+
 export const apps = {
   namespaced: true,
   state: {
-    list: [],
+    list: appList(),
     launched: false,
     drawer: true,
     section: 0,
@@ -23,9 +41,6 @@ export const apps = {
       state.section = 0;
       state.app = {};
     },
-    setApps(state, apps) {
-      state.list = apps;
-    },
     setSection(state, section) {
       state.section = section;
     }
@@ -43,6 +58,5 @@ export const apps = {
 
       commit("launchApp", app);
     }
-  },
-  modules: {}
+  }
 };
