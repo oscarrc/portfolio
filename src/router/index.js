@@ -38,9 +38,9 @@ const router = new VueRouter({
 
 router.afterEach(to => {
   if (to.meta.native) {
-    store.dispatch("apps/launchApp", to.name, { root: true });
+    store.dispatch("launchApp", to.name, { root: true });
   } else {
-    store.commit("apps/closeApp");
+    store.commit("closeApp");
   }
 });
 

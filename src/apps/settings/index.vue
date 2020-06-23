@@ -21,12 +21,7 @@
                   Display settings
                 </v-card-title>
                 <v-card-subtitle class="pt-4">Dark theme</v-card-subtitle>
-                <v-switch
-                  class="px-4"
-                  inset
-                  v-model="settings.dark"
-                  :label="settings.dark ? ' Enabled' : ' Disabled'"
-                ></v-switch>
+                <v-switch class="px-4" inset></v-switch>
                 <v-divider></v-divider>
                 <v-card-subtitle class="pt-4">Background Image</v-card-subtitle>
                 <v-file-input
@@ -108,8 +103,7 @@ export default {
     wrapper
   },
   computed: {
-    ...mapState("apps", ["app", "drawer", "section"]),
-    ...mapState(["settings"])
+    ...mapState(["app", "drawer", "section"])
   },
   methods: {
     handleAction() {}

@@ -52,7 +52,7 @@ export default {
     icon
   },
   computed: {
-    ...mapState("apps", ["list", "launched"])
+    ...mapState(["list", "launched"])
   },
   methods: {
     launchApp(app) {

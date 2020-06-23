@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer id="app-navigation" :value="status" persistent app>
+    <slot></slot>
     <v-list nav dense>
       <v-list-item-group
         mandatory
@@ -44,7 +45,7 @@ export default {
   },
   methods: {
     setActive(index) {
-      this.$store.commit("apps/setSection", index, { root: true });
+      this.$store.commit("setSection", index, { root: true });
     }
   }
 };

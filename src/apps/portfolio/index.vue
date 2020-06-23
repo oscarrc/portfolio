@@ -27,7 +27,7 @@ export default {
     wrapper
   },
   computed: {
-    ...mapState("apps", ["app", "drawer", "section"])
+    ...mapState(["app", "drawer", "section"])
   },
   methods: {
     handleAction() {}
