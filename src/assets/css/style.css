@@ -158,3 +158,8 @@
     }
   }
   
+  .notification{
+      opacity: 0.75;
+      height: 14px;
+      max-width: 25px;
+  }

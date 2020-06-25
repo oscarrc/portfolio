@@ -1,5 +1,11 @@
 <template>
   <v-system-bar id="notifications" lights-out dark app absolute>
+    <v-img
+      class="mr-2 notification"
+      src="/img/logo.svg"
+      contain
+      alt="Oscar R.C. Web Developer"
+    ></v-img>
     Oscar R.C.
     <v-spacer></v-spacer>
     <v-icon>mdi-signal-cellular-outline</v-icon>

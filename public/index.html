@@ -13,11 +13,11 @@
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app" v-cloak>
-    </div>
-    <div id="loader" v-if="!$data">
-      <img class="logo" src="img/logo.svg" alt="Oscar R.C. Web Developer" />
-      <div class="ellipsis"><div></div><div></div><div></div><div></div></div>
+    <div id="app">
+      <div id="loader" v-if="!$data">
+        <img class="logo" src="img/logo.svg" alt="Oscar R.C. Web Developer" />
+        <div class="ellipsis"><div></div><div></div><div></div><div></div></div>
+      </div>
     </div>
     <!-- built files will be auto injected -->
   </body>
