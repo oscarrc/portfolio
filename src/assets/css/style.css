@@ -78,7 +78,7 @@
 }
 
 .fullscreen{
-    height: 100vh;
+    max-height: 75vh;
 }
 
 .menu-item{

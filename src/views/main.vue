@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="screen">
     <notifications></notifications>
     <v-main class="pa-0">
       <v-window class="fullscreen">

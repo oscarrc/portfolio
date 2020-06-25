@@ -1,5 +1,5 @@
 <template>
-  <v-footer id="deck" fixed rounded elevation="2" color="transparent">
+  <v-footer id="deck" rounded elevation="2" color="transparent">
     <v-card width="100%" color="rgba(255, 255, 255, 0.2)" class="text-center">
       <v-container fluid class="deckedApps">
         <v-row class="justify-space-around align-start">

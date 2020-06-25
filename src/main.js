@@ -15,4 +15,4 @@ setTimeout(function() {
     vuetify,
     render: h => h(App)
   }).$mount("#app");
-}, 2000);
+}, 1000);
