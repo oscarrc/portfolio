@@ -15,7 +15,14 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn v-if="actions" class="ma-2" large icon>
+    <v-btn
+      v-if="actions"
+      :loading="loading"
+      class="ma-2"
+      large
+      icon
+      @click="$emit(actions[0].name)"
+    >
       <v-icon>{{ actions[0].icon }}</v-icon>
     </v-btn>
 
@@ -32,7 +39,9 @@
           ripple
           class="menu-item"
         >
-          <v-list-item-title>{{ action.name }}</v-list-item-title>
+          <v-list-item-title @click="$emit(action.name)">
+            {{ action.name }}
+          </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -54,6 +63,9 @@ export default {
     actions: {
       type: Array,
       required: false
+    },
+    loading: {
+      type: Boolean
     }
   },
   computed: {

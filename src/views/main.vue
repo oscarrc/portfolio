@@ -1,5 +1,5 @@
 <template>
-  <v-app id="screen">
+  <v-app id="screen" ref="el">
     <notifications></notifications>
     <v-main class="pa-0">
       <v-window class="fullscreen">
@@ -18,12 +18,14 @@
     <v-dialog
       id="app"
       fullscreen
+      :dark="dark"
       :value="launched"
       @click:outside="closeApp"
-      @keydown="closeApp"
+      @keydown="closeEsc"
     >
       <router-view></router-view>
     </v-dialog>
+
     <deck>
       <icon
         v-for="(app, index) in getApps(true)"
@@ -52,7 +54,8 @@ export default {
     icon
   },
   computed: {
-    ...mapState(["list", "launched"])
+    ...mapState(["list", "launched"]),
+    ...mapState("settings", ["dark"])
   },
   methods: {
     launchApp(app) {
@@ -69,6 +72,11 @@ export default {
     },
     closeApp() {
       this.$router.push("/");
+    },
+    closeEsc(key) {
+      if (key.code == "Escape") {
+        this.closeApp();
+      }
     }
   }
 };

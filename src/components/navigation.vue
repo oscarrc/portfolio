@@ -46,6 +46,7 @@ export default {
   methods: {
     setActive(index) {
       this.$store.commit("setSection", index, { root: true });
+      this.$emit("navigate", index);
     }
   }
 };

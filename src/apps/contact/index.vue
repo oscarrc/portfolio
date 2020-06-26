@@ -80,7 +80,7 @@
         fab
         class="fab-button"
       >
-        <v-icon>mdi-plus</v-icon>
+        <v-icon>mdi-send</v-icon>
       </v-btn>
     </v-fab-transition>
   </v-card>

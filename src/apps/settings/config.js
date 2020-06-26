@@ -12,12 +12,8 @@ export default {
   ],
   sections: [
     {
-      name: "Display",
+      name: "General",
       icon: "mdi-monitor"
-    },
-    {
-      name: "Language",
-      icon: "mdi-translate"
     },
     {
       name: "Licenses",
