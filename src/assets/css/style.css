@@ -29,6 +29,10 @@
     height: 100%;
 }
 
+#app-card .v-slide-group {
+  display: none !important;
+}
+
 #app-wrapper{
     overflow-y: auto;
     height: 100%;

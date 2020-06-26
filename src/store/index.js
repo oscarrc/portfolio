@@ -19,7 +19,8 @@ const store = new Vuex.Store({
     launched: false,
     drawer: true,
     section: 0,
-    app: {}
+    app: {},
+    loading: false
   },
   mutations: {
     toggleDrawer(state) {
@@ -37,6 +38,9 @@ const store = new Vuex.Store({
     },
     setSection(state, section) {
       state.section = section;
+    },
+    setLoading(state, status) {
+      state.loading = status;
     }
   },
   actions: {

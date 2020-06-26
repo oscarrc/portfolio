@@ -4,7 +4,7 @@
       :name="app.name"
       :color="app.color"
       :actions="app.actions"
-      :loading="isLoading"
+      :loading="loading"
       @Save="save"
     ></bar>
     <navigation
@@ -16,13 +16,20 @@
     </navigation>
     <wrapper>
       <v-col cols="12" md="8" class="px-0">
-        <v-tabs hide-slider v-model="section">
-          <v-tabs-items vertical v-model="section">
+        <v-tabs v-model="section">
+          <v-tabs-slider></v-tabs-slider>
+
+          <v-tabs-items eager vertical v-model="section">
             <v-tab-item
               transition="fade-transition"
               reverse-transition="fade-transition"
             >
-              <v-card>
+              <v-card
+                :flat="
+                  this.$vuetify.breakpoint.name == 'sm' ||
+                    this.$vuetify.breakpoint.name == 'xs'
+                "
+              >
                 <v-card-title>
                   General Settings
                 </v-card-title>
@@ -41,7 +48,6 @@
                   @change="handleImage"
                   accept="image/*"
                   class="px-4"
-                  label="Select an image"
                   prepend-icon="mdi-file-image"
                 ></v-file-input>
                 <v-divider></v-divider>
@@ -50,7 +56,6 @@
                   v-model="values.language"
                   class="px-4"
                   :items="languages"
-                  label="Select your language"
                   prepend-icon="mdi-translate"
                 ></v-select>
                 <v-divider></v-divider>
@@ -73,7 +78,12 @@
               transition="fade-transition"
               reverse-transition="fade-transition"
             >
-              <v-card>
+              <v-card
+                :flat="
+                  this.$vuetify.breakpoint.name == 'sm' ||
+                    this.$vuetify.breakpoint.name == 'xs'
+                "
+              >
                 <v-card-title>
                   License information
                 </v-card-title>
@@ -243,7 +253,12 @@
               transition="fade-transition"
               reverse-transition="fade-transition"
             >
-              <v-card>
+              <v-card
+                :flat="
+                  this.$vuetify.breakpoint.name == 'sm' ||
+                    this.$vuetify.breakpoint.name == 'xs'
+                "
+              >
                 <v-card-title>
                   Factory Reset
                 </v-card-title>
@@ -252,7 +267,9 @@
                   its initial state. <strong>¿Are you sure?</strong>
                 </v-card-text>
                 <v-card-actions class="pa-4">
-                  <v-btn color="error" @click="reset">Reset to defaults</v-btn>
+                  <v-btn color="error" @click="reset" :loading="loading">
+                    Reset to defaults
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </v-tab-item>
@@ -279,7 +296,13 @@ export default {
   },
   computed: {
     ...mapState(["app", "drawer", "section"]),
-    ...mapState("settings", ["dark", "background", "language", "privacy"]),
+    ...mapState("settings", [
+      "dark",
+      "background",
+      "language",
+      "privacy",
+      "loading"
+    ]),
     values() {
       return {
         dark: this.dark,
@@ -336,12 +359,15 @@ export default {
         reader.readAsDataURL(e);
       } else {
         this.values.background.name = "default";
-        this.values.background.image = null;
+        this.values.background.image = "/img/bg.jpg";
       }
     },
     reset() {
       this.$store.dispatch("settings/resetSettings");
     }
+  },
+  created() {
+    console.log(this.$vuetify.breakpoint.name);
   }
 };
 </script>

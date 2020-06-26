@@ -4,7 +4,7 @@
       :name="app.name"
       :color="app.color"
       :actions="app.actions"
-      @click="handleAction()"
+      @Compose="compose = true"
     ></bar>
     <navigation
       :color="app.color"
@@ -79,6 +79,7 @@
         right
         fab
         class="fab-button"
+        @click="send"
       >
         <v-icon>mdi-send</v-icon>
       </v-btn>
@@ -94,7 +95,7 @@ import navigation from "@/components/navigation";
 import wrapper from "@/components/wrapper";
 
 export default {
-  name: "About",
+  name: "Contact",
   components: {
     bar,
     navigation,
@@ -105,14 +106,14 @@ export default {
   },
   data() {
     return {
-      compose: true,
+      compose: false,
       from: "",
       subject: "",
       message: ""
     };
   },
   methods: {
-    handleAction() {}
+    send() {}
   }
 };
 </script>

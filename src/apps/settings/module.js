@@ -10,9 +10,10 @@ const defaultSettings = () => {
     privacy: settings?.privacy || false,
     background: {
       name: settings?.background.name || "default",
-      image: settings?.background.image || null
+      image: settings?.background.image || "/img/bg.jpg"
     },
-    language: settings?.language || "en_US"
+    language: settings?.language || "en_US",
+    loading: false
   };
 };
 
@@ -26,14 +27,18 @@ export default {
   },
   actions: {
     saveSettings({ commit }, settings) {
+      commit("setLoading", true, { root: true });
       vuetify.framework.theme.dark = settings.dark;
       commit("setSettings", settings);
       if (settings.privacy)
         localStorage.setItem("settings", JSON.stringify(settings));
+      commit("setLoading", false, { root: true });
     },
     resetSettings({ commit }) {
+      commit("setLoading", true, { root: true });
       localStorage.removeItem("settings");
       commit("setSettings", defaultSettings());
+      commit("setLoading", false, { root: true });
     }
   },
   getters: {

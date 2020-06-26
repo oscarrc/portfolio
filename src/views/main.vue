@@ -1,5 +1,9 @@
 <template>
-  <v-app id="screen" ref="el">
+  <v-app
+    id="screen"
+    ref="el"
+    :style="{ backgroundImage: `url(&quot;${background.image}&quot;)` }"
+  >
     <notifications></notifications>
     <v-main class="pa-0">
       <v-window class="fullscreen">
@@ -53,7 +57,8 @@ export default {
     icon
   },
   computed: {
-    ...mapState(["list", "launched"])
+    ...mapState(["list", "launched"]),
+    ...mapState("settings", ["background"])
   },
   methods: {
     launchApp(app) {
