@@ -39,7 +39,6 @@
                 </v-card-subtitle>
                 <v-file-input
                   @change="handleImage"
-                  v-model="background.name"
                   accept="image/*"
                   class="px-4"
                   label="Select an image"
@@ -253,7 +252,7 @@
                   its initial state. <strong>¿Are you sure?</strong>
                 </v-card-text>
                 <v-card-actions class="pa-4">
-                  <v-btn color="error">Reset to defaults</v-btn>
+                  <v-btn color="error" @click="reset">Reset to defaults</v-btn>
                 </v-card-actions>
               </v-card>
             </v-tab-item>
@@ -317,26 +316,31 @@ export default {
       this.$store.dispatch("settings/saveSettings", {
         dark: this.values.dark,
         background: {
-          name: this.values.background,
-          image: this.values.image
+          name: this.values.background.name,
+          image: this.values.background.image
         },
         language: this.values.language,
         privacy: this.values.privacy
       });
     },
     handleImage(e) {
-      const reader = new FileReader();
+      if (e) {
+        const reader = new FileReader();
 
-      this.values.background.name = e.name;
+        this.values.background.name = e;
 
-      reader.onloadend = e => {
-        this.values.background.image = e.target.result;
-      };
+        reader.onloadend = e => {
+          this.values.background.image = e.target.result;
+        };
 
-      reader.readAsDataURL(e);
+        reader.readAsDataURL(e);
+      } else {
+        this.values.background.name = "default";
+        this.values.background.image = null;
+      }
     },
     reset() {
-      this.$store.dispatch("reset");
+      this.$store.dispatch("settings/resetSettings");
     }
   }
 };

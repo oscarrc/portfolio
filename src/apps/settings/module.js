@@ -3,6 +3,8 @@ import vuetify from "@/plugins/vuetify";
 const defaultSettings = () => {
   let settings = JSON.parse(localStorage.getItem("settings"));
 
+  vuetify.framework.theme.dark = settings?.dark || false;
+
   return {
     dark: settings?.dark || false,
     privacy: settings?.privacy || false,
@@ -19,7 +21,7 @@ export default {
   state: defaultSettings(),
   mutations: {
     setSettings(state, settings) {
-      state.settings = settings;
+      state = settings;
     }
   },
   actions: {
@@ -36,7 +38,7 @@ export default {
   },
   getters: {
     getSettings(state) {
-      return state.settings;
+      return state;
     }
   }
 };

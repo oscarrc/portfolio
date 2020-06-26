@@ -18,7 +18,6 @@
     <v-dialog
       id="app"
       fullscreen
-      :dark="dark"
       :value="launched"
       @click:outside="closeApp"
       @keydown="closeEsc"
@@ -54,8 +53,7 @@ export default {
     icon
   },
   computed: {
-    ...mapState(["list", "launched"]),
-    ...mapState("settings", ["dark"])
+    ...mapState(["list", "launched"])
   },
   methods: {
     launchApp(app) {
@@ -78,9 +76,6 @@ export default {
         this.closeApp();
       }
     }
-  },
-  created() {
-    this.$vuetify.theme.dark = this.dark;
   }
 };
 </script>
