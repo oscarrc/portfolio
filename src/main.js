@@ -10,15 +10,14 @@ import "@/assets/css/style.css";
 Vue.config.productionTip = false;
 Vue.use(VueCompAPI);
 
-(() => {
-  const apps = require.context("@/apps", true, /module.js$/);
-  apps.keys().map(app => {
-    store.registerModule(
-      app.substring(app.indexOf("/") + 1, app.lastIndexOf("/")),
-      require(`@/apps${app.substr(1)}`).default
-    );
-  });
-})();
+const apps = require.context("@/apps", true, /module.js$/);
+
+apps.keys().map(app => {
+  store.registerModule(
+    app.substring(app.indexOf("/") + 1, app.lastIndexOf("/")),
+    require(`@/apps${app.substr(1)}`).default
+  );
+});
 
 setTimeout(function() {
   new Vue({

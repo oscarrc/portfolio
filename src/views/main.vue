@@ -78,6 +78,9 @@ export default {
         this.closeApp();
       }
     }
+  },
+  created() {
+    this.$vuetify.theme.dark = this.dark;
   }
 };
 </script>
