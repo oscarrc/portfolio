@@ -23,5 +23,30 @@ export default {
       name: "Trash",
       icon: "mdi-delete"
     }
-  ]
+  ],
+  inbox: [
+    {
+      from: "Oscar R.C.",
+      subject: "Welcome to my site",
+      avatar: "https://cdn.vuetifyjs.com/images/profiles/marcus.jpg",
+      message:
+        "<p>Hey there!</p><p>I hope you're enjoying my site.</p><p>If you have any questions about me or what I do don't hesitate to reply this email or write a new one. I'll be happy to answer.</p><p>Cheers.</p>",
+      read: false,
+      active: false,
+      date: new Date()
+    }
+  ],
+  sent: [],
+  trash: [],
+  notifications: function() {
+    let count = 0;
+
+    this.inbox.forEach(i => {
+      if (!i.read) {
+        count = count + 1;
+      }
+    });
+
+    return count;
+  }
 };

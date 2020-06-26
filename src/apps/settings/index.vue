@@ -17,8 +17,6 @@
     <wrapper>
       <v-col cols="12" md="8" class="px-0">
         <v-tabs v-model="section">
-          <v-tabs-slider></v-tabs-slider>
-
           <v-tabs-items eager vertical v-model="section">
             <v-tab-item
               transition="fade-transition"

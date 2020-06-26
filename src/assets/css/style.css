@@ -36,7 +36,7 @@
 #app-wrapper{
     overflow-y: auto;
     height: 100%;
-    padding-top: 64px !important;
+    padding-top: 75px !important;
 }
 
 #app-navigation{
@@ -166,4 +166,8 @@
       opacity: 0.75;
       height: 14px;
       max-width: 25px;
+  }
+
+  .email-body p{
+    padding-top: 10px;
   }

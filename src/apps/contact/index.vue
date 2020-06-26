@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 <template>
   <v-card tile id="app-card">
     <bar
@@ -13,7 +14,86 @@
       :active="section"
     >
     </navigation>
-    <wrapper></wrapper>
+    <wrapper>
+      <v-col cols="12" md="8" class="px-0">
+        <v-tabs v-model="section">
+          <v-tabs-items eager vertical v-model="section">
+            <v-tab-item
+              transition="fade-transition"
+              reverse-transition="fade-transition"
+            >
+              <v-list
+                v-if="app.inbox.length > 0"
+                three-line
+                :elevation="
+                  this.$vuetify.breakpoint.name == 'sm' ||
+                  this.$vuetify.breakpoint.name == 'xs'
+                    ? 0
+                    : 2
+                "
+              >
+                <v-subheader>Today</v-subheader>
+                <v-divider></v-divider>
+                <v-list-group
+                  v-model="email.active"
+                  v-for="(email, index) in app.inbox"
+                  :key="index"
+                  @click="email.read = true"
+                >
+                  <v-list-item
+                    slot="activator"
+                    class="menu-item px-0"
+                    :key="index"
+                    disabled
+                  >
+                    <v-list-item-avatar>
+                      <v-img :src="email.avatar"></v-img>
+                    </v-list-item-avatar>
+
+                    <v-list-item-content>
+                      <v-list-item-title
+                        :class="!email.read ? 'font-weight-black' : ''"
+                      >
+                        {{ email.subject }}
+                      </v-list-item-title>
+                      <v-list-item-subtitle
+                        :class="!email.read ? 'font-weight-black' : ''"
+                      >
+                        From: {{ email.from }}
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item-content
+                    class="px-8 email-body"
+                    color="text-light"
+                    v-html="email.message"
+                  >
+                  </v-list-item-content>
+                  <v-list-item-action class="d-flex flex-row justify-end px-8">
+                    <v-btn icon class="pr-2" @click="compose = true">
+                      <v-icon>mdi-reply</v-icon>
+                    </v-btn>
+                    <v-btn icon><v-icon>mdi-delete</v-icon></v-btn>
+                  </v-list-item-action>
+                </v-list-group>
+              </v-list>
+              <v-card
+                v-else
+                class="pa-5 d-flex justify-center"
+                :flat="
+                  this.$vuetify.breakpoint.name == 'sm' ||
+                    this.$vuetify.breakpoint.name == 'xs'
+                "
+              >
+                <v-card-title class="h2">
+                  There are no messages
+                </v-card-title>
+              </v-card>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
+      </v-col>
+    </wrapper>
     <v-dialog max-width="80vw" v-model="compose" hide-overlay>
       <v-card
         :tile="
@@ -72,7 +152,7 @@
     <v-fab-transition>
       <v-btn
         v-show="compose"
-        color="red"
+        color="secondary"
         dark
         absolute
         bottom

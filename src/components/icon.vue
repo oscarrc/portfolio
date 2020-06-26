@@ -1,7 +1,12 @@
 <template>
   <v-col cols="3" class="d-flex justify-center text-center" @click="clicked">
     <v-sheet class="icon" color="transparent">
-      <v-badge v-model="notifications" content="1" color="red" overlap>
+      <v-badge
+        :value="app.notifications ? app.notifications() : 0"
+        content="1"
+        color="red"
+        overlap
+      >
         <v-img
           contain
           class="mb-4 pa-1"
@@ -16,11 +21,6 @@
 <script>
 export default {
   name: "icon",
-  data() {
-    return {
-      notifications: false
-    };
-  },
   props: {
     app: {
       icon: {
@@ -46,6 +46,9 @@ export default {
       color: {
         type: String,
         required: true
+      },
+      notifications: {
+        type: Number
       }
     }
   },
