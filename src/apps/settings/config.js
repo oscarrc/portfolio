@@ -4,6 +4,13 @@ export default {
   native: true,
   decked: false,
   color: "blue-grey",
+  dark: false,
+  language: "en_US",
+  privacy: false,
+  background: {
+    name: "default",
+    image: "/img/bg.jpg"
+  },
   actions: [
     {
       name: "Save",

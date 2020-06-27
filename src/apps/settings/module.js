@@ -2,19 +2,23 @@ import vuetify from "@/plugins/vuetify";
 
 const defaultSettings = () => {
   let settings = JSON.parse(localStorage.getItem("settings"));
+  let defaultSettings;
 
-  vuetify.framework.theme.dark = settings?.dark || false;
+  if (settings) {
+    defaultSettings = {
+      ...settings,
+      loading: false
+    };
+  } else {
+    defaultSettings = {
+      ...require("./config").default,
+      loading: false
+    };
+  }
 
-  return {
-    dark: settings?.dark || false,
-    privacy: settings?.privacy || false,
-    background: {
-      name: settings?.background.name || "default",
-      image: settings?.background.image || "/img/bg.jpg"
-    },
-    language: settings?.language || "en_US",
-    loading: false
-  };
+  vuetify.framework.theme.dark = defaultSettings.dark;
+
+  return defaultSettings;
 };
 
 export default {
