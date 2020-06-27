@@ -29,9 +29,12 @@ export default {
       state.loading = true;
       state.error = false;
     },
-    mailSent(state) {
+    mailSent(state, message) {
       state.loading = false;
       state.compose = false;
+      console.log(message);
+      state.sent.push(message);
+      console.log(state);
     },
     mailError(state) {
       state.loading = false;
@@ -39,6 +42,9 @@ export default {
     },
     toggleCompose(state) {
       state.compose = !state.compose;
+    },
+    moveToTrash(state, message) {
+      state.trash.push(message);
     }
   },
   actions: {
@@ -52,9 +58,11 @@ export default {
           body: JSON.stringify(email)
         }
       )
-        .then(res => {
-          if (res.success) {
-            commit("mailSent");
+        .then(async res => {
+          let response = await res.json();
+
+          if (response.success) {
+            commit("mailSent", email);
           } else {
             commit("mailError");
           }

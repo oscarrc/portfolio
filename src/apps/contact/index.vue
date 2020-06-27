@@ -80,7 +80,7 @@
         </v-card-text>
         <v-card-actions class="px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn :color="color" @click="send">
+          <v-btn :color="color" dark @click="send">
             <v-icon class="pr-2">mdi-send</v-icon> Enviar
           </v-btn>
         </v-card-actions>
@@ -144,14 +144,6 @@ export default {
   },
   methods: {
     send() {
-      this.app.sent.push({
-        from: this.from,
-        to: "Oscar R.C.",
-        subject: this.subject,
-        message: this.message,
-        read: true
-      });
-
       this.$store
         .dispatch("contact/sendMail", {
           from: this.from,
@@ -163,7 +155,7 @@ export default {
         });
     },
     remove(message) {
-      this.app.trash.push(message);
+      this.$store.commit("contact/moveToTrash", message, { root: true });
     },
     toggleCompose(e) {
       if (!e || !e.key || (e && e.key == "Escape")) {
