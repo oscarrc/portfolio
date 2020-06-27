@@ -21,15 +21,13 @@ const store = new Vuex.Store({
     launched: false,
     drawer: true,
     section: 0,
-    app: {},
     loading: false
   },
   mutations: {
     toggleDrawer(state) {
       state.drawer = !state.drawer;
     },
-    launchApp(state, app) {
-      state.app = app;
+    launchApp(state) {
       state.section = 0;
       state.launched = true;
     },

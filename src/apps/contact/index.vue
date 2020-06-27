@@ -1,9 +1,9 @@
 <template>
   <v-card tile id="app-card">
-    <bar :name="app.name" :color="app.color" @Compose="toggleCompose"></bar>
+    <bar :name="name" :color="color" @Compose="toggleCompose"></bar>
     <navigation
-      :color="app.color"
-      :sections="app.sections || []"
+      :color="color"
+      :sections="sections || []"
       :status="drawer"
       :active="section"
     >
@@ -12,9 +12,9 @@
       <v-col cols="12" md="8" class="px-0">
         <v-tabs v-model="section">
           <v-tabs-items eager v-model="section">
-            <box :box="app.inbox" @compose="toggleCompose" @remove="remove" />
-            <box :box="app.sent" @compose="toggleCompose" @remove="remove" />
-            <box :box="app.trash" @compose="toggleCompose" @remove="remove" />
+            <box :box="inbox" @compose="toggleCompose" @remove="remove" />
+            <box :box="sent" @compose="toggleCompose" @remove="remove" />
+            <box :box="trash" @compose="toggleCompose" @remove="remove" />
           </v-tabs-items>
         </v-tabs>
       </v-col>
@@ -27,7 +27,7 @@
       @keydown="toggleCompose"
     >
       <v-card
-        :loading="loading ? app.color : loading"
+        :loading="loading ? color : loading"
         :tile="
           this.$vuetify.breakpoint.name == 'sm' ||
             this.$vuetify.breakpoint.name == 'xs'
@@ -80,7 +80,7 @@
         </v-card-text>
         <v-card-actions class="px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn :color="app.color" @click="send">
+          <v-btn :color="color" @click="send">
             <v-icon class="pr-2">mdi-send</v-icon> Enviar
           </v-btn>
         </v-card-actions>
@@ -90,7 +90,7 @@
     <v-fab-transition>
       <v-btn
         v-show="!compose"
-        :color="app.color"
+        :color="color"
         dark
         absolute
         bottom
@@ -122,8 +122,18 @@ export default {
     box
   },
   computed: {
-    ...mapState(["app", "drawer", "section"]),
-    ...mapState("contact", ["compose", "loading"])
+    ...mapState(["drawer", "section"]),
+    ...mapState("contact", [
+      "name",
+      "color",
+      "sections",
+      "actions",
+      "inbox",
+      "sent",
+      "trash",
+      "compose",
+      "loading"
+    ])
   },
   data() {
     return {

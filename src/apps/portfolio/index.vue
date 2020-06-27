@@ -26,8 +26,13 @@ export default {
     navigation,
     wrapper
   },
+  data() {
+    return {
+      app: require("./config").default
+    };
+  },
   computed: {
-    ...mapState(["app", "drawer", "section"])
+    ...mapState(["drawer", "section"])
   },
   methods: {
     handleAction() {}

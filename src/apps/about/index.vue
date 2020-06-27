@@ -218,11 +218,12 @@ export default {
   },
   data() {
     return {
-      open: [0]
+      open: [0],
+      app: require("./config").default
     };
   },
   computed: {
-    ...mapState(["app", "drawer", "section"])
+    ...mapState(["drawer", "section"])
   },
   methods: {
     handleAction() {

@@ -1,15 +1,15 @@
 <template>
   <v-card tile id="app-card">
     <bar
-      :name="app.name"
-      :color="app.color"
-      :actions="app.actions"
+      :name="name"
+      :color="color"
+      :actions="actions"
       :loading="loading"
       @Save="save"
     ></bar>
     <navigation
-      :color="app.color"
-      :sections="app.sections || []"
+      :color="color"
+      :sections="sections || []"
       :status="drawer"
       :active="section"
     >
@@ -293,8 +293,12 @@ export default {
     wrapper
   },
   computed: {
-    ...mapState(["app", "drawer", "section"]),
+    ...mapState(["drawer", "section"]),
     ...mapState("settings", [
+      "name",
+      "color",
+      "actions",
+      "sections",
       "dark",
       "background",
       "language",
@@ -363,9 +367,6 @@ export default {
     reset() {
       this.$store.dispatch("settings/resetSettings");
     }
-  },
-  created() {
-    console.log(this.$vuetify.breakpoint.name);
   }
 };
 </script>

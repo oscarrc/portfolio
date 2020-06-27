@@ -26,16 +26,23 @@ export default {
   state: defaultSettings(),
   mutations: {
     setSettings(state, settings) {
-      state = settings;
+      state.dark = settings.dark;
+      state.language = settings.language;
+      state.background.name = settings.background.name;
+      state.background.image = settings.background.image;
+      state.privacy = settings.privacy;
     }
   },
   actions: {
     saveSettings({ commit }, settings) {
-      commit("setLoading", true, { root: true });
       vuetify.framework.theme.dark = settings.dark;
+
+      commit("setLoading", true, { root: true });
       commit("setSettings", settings);
+
       if (settings.privacy)
         localStorage.setItem("settings", JSON.stringify(settings));
+
       commit("setLoading", false, { root: true });
     },
     resetSettings({ commit }) {
