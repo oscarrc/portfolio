@@ -44,6 +44,7 @@
                 </v-card-subtitle>
                 <v-file-input
                   @change="handleImage"
+                  :placeholder="values.background.name"
                   accept="image/*"
                   class="px-4"
                   prepend-icon="mdi-file-image"
@@ -352,7 +353,7 @@ export default {
       if (e) {
         const reader = new FileReader();
 
-        this.values.background.name = e;
+        this.values.background.name = e.name;
 
         reader.onloadend = e => {
           this.values.background.image = e.target.result;
