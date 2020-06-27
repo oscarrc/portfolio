@@ -29,12 +29,25 @@ export default {
       state.loading = true;
       state.error = false;
     },
+    receiveMail(state) {
+      state.inbox.push({
+        from: "Oscar R.C.",
+        subject: "Thank you for contacting",
+        avatar: "https://cdn.vuetifyjs.com/images/profiles/marcus.jpg",
+        message: `<p>Hey there!</p>
+        <p>I've received your email.</p>
+        <p>I've reading it as soon as I could, and rest asure I'll be replying</p>
+        <p>Thank you for writing</p>
+        <p>Cheers</p>`,
+        read: false,
+        active: false,
+        date: new Date()
+      });
+    },
     mailSent(state, message) {
       state.loading = false;
       state.compose = false;
-      console.log(message);
       state.sent.push(message);
-      console.log(state);
     },
     mailError(state) {
       state.loading = false;
@@ -63,6 +76,9 @@ export default {
 
           if (response.success) {
             commit("mailSent", email);
+            setTimeout(function() {
+              commit("receiveMail");
+            }, 5000);
           } else {
             commit("mailError");
           }
