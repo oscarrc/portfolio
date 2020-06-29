@@ -76,7 +76,7 @@ export default {
 
           if (response.success) {
             commit("mailSent", email);
-            setTimeout(function() {
+            setTimeout(() => {
               commit("receiveMail");
             }, 5000);
           } else {

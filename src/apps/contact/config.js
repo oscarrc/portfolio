@@ -39,14 +39,13 @@ export default {
   sent: [],
   trash: [],
   notifications: function() {
-    let count = 0;
-
-    this.inbox.forEach(i => {
+    return this.inbox.forEach(i => {
+      let t = 0;
       if (!i.read) {
-        count = count + 1;
+        t++;
       }
-    });
 
-    return count;
+      return t;
+    });
   }
 };

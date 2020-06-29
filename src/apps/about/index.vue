@@ -1,6 +1,11 @@
 <template>
   <v-card tile id="app-card">
-    <bar :name="app.name" :color="app.color" :actions="app.actions"></bar>
+    <bar
+      :name="app.name"
+      :color="app.color"
+      :actions="app.actions"
+      @Download="download"
+    ></bar>
     <navigation
       :color="app.color"
       :sections="app.sections || []"
@@ -42,13 +47,91 @@
           </v-img>
           <v-expansion-panels accordion :value="section">
             <v-expansion-panel>
-              <v-expansion-panel-header>
+              <v-expansion-panel-header @click="setSection">
                 Personal Profile
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 I'm young and proactive web developer based in Galicia, Spain.
                 I'm I'm looking forward to improve my skills and learn from
-                others order to make a career on what I love.
+                others order to make a career on what I love. This is my
+                skillset, but, keep in mind I'm still learning:
+                <v-divider class="mt-8 mb-4"></v-divider>
+                <v-row class="pb-4">
+                  <v-col cols="6" class="d-flex flex-column ">
+                    <span class="pt-2 subtitle-1">Linux</span>
+                    <v-progress-linear
+                      value="80"
+                      :color="app.color + ' accent-4'"
+                    ></v-progress-linear>
+
+                    <span class="pt-2 subtitle-1">Apache</span>
+                    <v-progress-linear
+                      value="75"
+                      :color="app.color + ' accent-4'"
+                    ></v-progress-linear>
+
+                    <span class="pt-2 subtitle-1">MySQL</span>
+                    <v-progress-linear
+                      value="70"
+                      :color="app.color + ' accent-3'"
+                    ></v-progress-linear>
+                    <span class="pt-2 subtitle-1">PHP</span>
+                    <v-progress-linear
+                      value="70"
+                      :color="app.color + ' accent-3'"
+                    ></v-progress-linear>
+                    <span class="pt-2 subtitle-1">JS ES6</span>
+                    <v-progress-linear
+                      class="align-self-center"
+                      :color="app.color + ' accent-4'"
+                      :value="75"
+                    ></v-progress-linear>
+                    <span class="pt-2 subtitle-1">Java</span>
+                    <v-progress-linear
+                      class="align-self-center"
+                      :color="app.color + ' accent-1'"
+                      :value="45"
+                    ></v-progress-linear>
+                  </v-col>
+                  <v-col cols="6" class="d-flex flex-column ">
+                    <span class="pt-2 subtitle-1">Mongo</span>
+                    <v-progress-linear
+                      value="55"
+                      :color="app.color + ' accent-2'"
+                    ></v-progress-linear>
+
+                    <span class="pt-2 subtitle-1">Express</span>
+                    <v-progress-linear
+                      :color="app.color + ' accent-4'"
+                      :value="75"
+                    ></v-progress-linear>
+
+                    <span class="pt-2 subtitle-1">Angular</span>
+                    <v-progress-linear
+                      class="align-self-center"
+                      :color="app.color + ' accent-3'"
+                      :value="60"
+                    ></v-progress-linear>
+                    <span class="pt-2 subtitle-1">NodeJS</span>
+                    <v-progress-linear
+                      class="align-self-center"
+                      :color="app.color + ' accent-3'"
+                      :value="70"
+                    ></v-progress-linear>
+                    <span class="pt-2 subtitle-1">React</span>
+                    <v-progress-linear
+                      class="align-self-center"
+                      :color="app.color + ' accent-2'"
+                      :value="50"
+                    ></v-progress-linear>
+                    <span class="pt-2 subtitle-1">Vue</span>
+                    <v-progress-linear
+                      class="align-self-center"
+                      :color="app.color + ' accent-3'"
+                      :value="60"
+                    ></v-progress-linear>
+                  </v-col>
+                </v-row>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
@@ -160,39 +243,37 @@
             </v-expansion-panel>
             <v-expansion-panel>
               <v-expansion-panel-header>
-                Areas of Expertise
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <ul>
-                  <li>HTML 5, CSS3 and Javascript</li>
-                  <li>LAMP Stack (Linux, Apache, Mysql and PHP)</li>
-                  <li>MEAN Stack (Mongo, Express, Angular and Node)</li>
-                </ul>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                Other Skills
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <ul>
-                  <li>Basic knowledge of React and Vue frameworks</li>
-                  <li>
-                    Basic knowledge of JAVA and C# programming languages
-                  </li>
-                  <li>Linux server administration</li>
-                </ul>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
                 Languages
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <ul>
-                  <li>Native Spanish speaker</li>
-                  <li>Advanced written and intermediate spoken English</li>
-                </ul>
+                <v-row>
+                  <v-col cols="6" class="text-center">
+                    <v-progress-circular
+                      :rotate="360"
+                      :size="100"
+                      :width="15"
+                      value="100"
+                      :color="app.color + ' accent-4'"
+                    >
+                      Spanish
+                    </v-progress-circular>
+                    <span class="d-block pt-2">Native speaker</span>
+                  </v-col>
+                  <v-col cols="6" class="text-center">
+                    <v-progress-circular
+                      :rotate="360"
+                      :size="100"
+                      :width="15"
+                      value="75"
+                      :color="app.color + ' accent-2'"
+                    >
+                      English
+                    </v-progress-circular>
+                    <span class="d-block pt-2">
+                      Advanced writen, intermediate spoken
+                    </span>
+                  </v-col>
+                </v-row>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -226,8 +307,11 @@ export default {
     ...mapState(["drawer", "section"])
   },
   methods: {
-    handleAction() {
-      window.open("/docs/Oscar R.C. C.V..pdf");
+    download() {
+      this.$store.dispatch("about/getCv");
+    },
+    setSection() {
+      this.$store.commit("setSection", 0);
     }
   }
 };
