@@ -6,6 +6,21 @@
     z-index: 0;
 }
 
+.card-overlay{
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+}
+
+.card-overlay a, .card-overlay a:hover{
+  color: white;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
 #notifications{
     z-index: 1000;
 }
@@ -29,7 +44,7 @@
     height: 100%;
 }
 
-#app-card .v-slide-group {
+#app-card .v-tabs .v-slide-group {
   display: none !important;
 }
 

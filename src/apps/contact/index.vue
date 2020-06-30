@@ -9,7 +9,7 @@
     >
     </navigation>
     <wrapper>
-      <v-col cols="12" md="8" class="px-0">
+      <v-col cols="12" md="8" class="px-0 mx-auto">
         <v-tabs v-model="section">
           <v-tabs-items eager v-model="section">
             <box :box="inbox" @compose="toggleCompose" @remove="remove" />

@@ -15,7 +15,7 @@
     >
     </navigation>
     <wrapper>
-      <v-col cols="12" md="8" class="px-0">
+      <v-col cols="12" md="8" class="px-0 mx-auto">
         <v-tabs v-model="section">
           <v-tabs-items eager vertical v-model="section">
             <v-tab-item

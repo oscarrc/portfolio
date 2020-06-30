@@ -14,8 +14,8 @@
     >
     </navigation>
     <wrapper>
-      <v-col cols="12" md="8" class="px-0">
-        <v-card class="mx-auto" tile>
+      <v-col cols="12" md="8" class="px-0 mx-auto">
+        <v-card tile>
           <v-img
             height="100%"
             max-height="20vh"
