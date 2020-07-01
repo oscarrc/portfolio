@@ -155,7 +155,7 @@ export default {
         });
     },
     remove(message) {
-      this.$store.commit("contact/moveToTrash", message, { root: true });
+      this.$store.commit("contact/moveToTrash", message);
     },
     toggleCompose(e) {
       if (!e || !e.key || (e && e.key == "Escape")) {

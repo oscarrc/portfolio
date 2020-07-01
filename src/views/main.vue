@@ -28,7 +28,6 @@
     >
       <router-view></router-view>
     </v-dialog>
-
     <deck>
       <icon
         v-for="(app, index) in getApps(true)"

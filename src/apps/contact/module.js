@@ -21,6 +21,13 @@ const defaultContact = () => {
   return defaultContact;
 };
 
+const saveData = state => {
+  delete state.loading;
+  delete state.error;
+  delete state.compose;
+  localStorage.setItem("contact", JSON.stringify(state));
+};
+
 export default {
   namespaced: true,
   state: defaultContact(),
@@ -61,7 +68,7 @@ export default {
     }
   },
   actions: {
-    sendMail({ commit }, email) {
+    sendMail({ commit, state }, email) {
       commit("sendingMail");
       fetch(
         "https://europe-west3-oscarrc-blog-1499165580887.cloudfunctions.net/sendMail",
@@ -79,6 +86,7 @@ export default {
             setTimeout(() => {
               commit("receiveMail");
             }, 5000);
+            saveData(state);
           } else {
             commit("mailError");
           }

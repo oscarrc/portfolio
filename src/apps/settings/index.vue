@@ -62,15 +62,9 @@
                 <v-switch
                   class="px-4"
                   inset
-                  label="Save settings"
+                  label="Persistent settings"
                   v-model="values.privacy"
                 ></v-switch>
-                <div class="px-4 py-4 body-2">
-                  <p>
-                    This app saves data on this computer. Do not enable this if
-                    this is a shared computer
-                  </p>
-                </div>
               </v-card>
             </v-tab-item>
             <v-tab-item
