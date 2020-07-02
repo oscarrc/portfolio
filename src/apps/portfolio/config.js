@@ -3,6 +3,8 @@ export default {
   path: "/portfolio",
   native: true,
   decked: false,
+  database: true,
+  storage: true,
   color: "purple",
   actions: [
     {

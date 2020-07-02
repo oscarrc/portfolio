@@ -40,10 +40,7 @@
       >
         <v-hover v-slot:default="{ hover }">
           <v-card color="grey lighten-4" class="mx-4">
-            <v-img
-              :aspect-ratio="16 / 9"
-              src="https://cdn.vuetifyjs.com/images/cards/kitchen.png"
-            >
+            <v-img :aspect-ratio="16 / 9" :src="p.image">
               <v-expand-transition>
                 <div
                   v-if="hover"
@@ -87,7 +84,7 @@
                 :active-class="app.color + '--text text--accent-4'"
                 multiple
               >
-                <v-chip v-for="t in p.technologies" :key="t" :value="t">
+                <v-chip v-for="t in p.tech" :key="t" :value="t">
                   {{ t }}
                 </v-chip>
               </v-chip-group>
@@ -105,6 +102,7 @@ import { mapState } from "vuex";
 import bar from "@/components/bar";
 import navigation from "@/components/navigation";
 import wrapper from "@/components/wrapper";
+import fb from "@/plugins/firebase";
 
 export default {
   name: "Portfolio",
@@ -116,6 +114,8 @@ export default {
   data() {
     return {
       app: require("./config").default,
+      loading: false,
+      projects: this.getProjects(),
       filter: false,
       filters: []
     };
@@ -129,9 +129,10 @@ export default {
         .filter((item, i, arr) => arr.indexOf(item) === i);
     },
     filteredProjects() {
-      let filtered = this.app.projects.filter(
+      let filtered = this.projects.filter(
         p =>
-          this.section == 0 || p.field == this.app.sections[this.section].name
+          this.section == 0 ||
+          p.field.includes(this.app.sections[this.section].name)
       );
 
       return filtered.filter(p =>
@@ -140,7 +141,29 @@ export default {
     }
   },
   methods: {
-    handleAction() {}
+    handleAction() {},
+    getProjects() {
+      let projects = [];
+
+      this.loading = true;
+
+      fb.portfolioCollection.get().then(docs => {
+        docs.forEach(doc => {
+          doc = doc.data();
+          fb.portfolioStore
+            .child(doc.image)
+            .getDownloadURL()
+            .then(url => {
+              doc.image = url;
+              projects.push(doc);
+            });
+        });
+      });
+
+      this.loading = false;
+
+      return projects;
+    }
   }
 };
 </script>

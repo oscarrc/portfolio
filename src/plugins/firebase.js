@@ -18,10 +18,27 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-const apps = db.collection("apps");
+let stores = {};
+let collections = {};
+
+require
+  .context("@/apps", true, /config.js$/)
+  .keys()
+  .forEach(x => {
+    let config = require("@/apps" + x.substr(1)).default;
+
+    if (config.storage)
+      stores[config.name.toLowerCase() + "Store"] = storage.ref(
+        config.name.toLowerCase()
+      );
+
+    if (config.database)
+      collections[config.name.toLowerCase() + "Collection"] = db.collection(
+        config.name.toLowerCase()
+      );
+  });
 
 export default {
-  db,
-  apps,
-  storage
+  ...stores,
+  ...collections
 };
