@@ -63,10 +63,10 @@
                 large
                 right
                 top
-                href="https://github.com"
+                :href="p.repo || p.url"
                 target="_BLANK"
               >
-                <v-icon>mdi-github</v-icon>
+                <v-icon>{{ p.repo ? "mdi-github" : "mdi-link" }}</v-icon>
               </v-btn>
               <h3
                 :class="app.color + '--text'"
@@ -98,11 +98,11 @@
 
 <script>
 import { mapState } from "vuex";
+import fb from "@/plugins/firebase";
 
 import bar from "@/components/bar";
 import navigation from "@/components/navigation";
 import wrapper from "@/components/wrapper";
-import fb from "@/plugins/firebase";
 
 export default {
   name: "Portfolio",
@@ -157,10 +157,10 @@ export default {
               doc.image = url;
               projects.push(doc);
             });
+
+          this.loading = false;
         });
       });
-
-      this.loading = false;
 
       return projects;
     }

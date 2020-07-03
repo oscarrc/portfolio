@@ -3,6 +3,8 @@ export default {
   path: "/about",
   native: true,
   decked: false,
+  database: true,
+  storage: true,
   color: "blue",
   actions: [
     {

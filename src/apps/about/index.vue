@@ -13,20 +13,14 @@
       :active="section"
     >
     </navigation>
-    <wrapper>
+    <wrapper v-if="!loading">
       <v-col cols="12" md="8" class="px-0 mx-auto">
-        <v-card tile>
-          <v-img
-            height="100%"
-            max-height="20vh"
-            src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
-          >
+        <v-card tile v-for="(item, index) in about" :key="index">
+          <v-img height="100%" max-height="20vh" :src="background">
             <v-row class="fill-height">
               <v-col class="d-flex" align-self="start">
                 <v-avatar class="profile" color="grey" size="164" tile>
-                  <v-img
-                    src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
-                  ></v-img>
+                  <v-img :src="avatar"></v-img>
                 </v-avatar>
                 <v-list-item
                   color="rgba(0, 0, 0, .4)"
@@ -35,10 +29,10 @@
                 >
                   <v-list-item-content>
                     <v-list-item-title class="title">
-                      Oscar R.C.
+                      {{ item.name }}
                     </v-list-item-title>
                     <v-list-item-subtitle>
-                      Web Developer
+                      {{ item.slogan }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
@@ -51,84 +45,19 @@
                 Personal Profile
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                I'm young and proactive web developer based in Galicia, Spain.
-                I'm I'm looking forward to improve my skills and learn from
-                others order to make a career on what I love. This is my
-                skillset, but, keep in mind I'm still learning:
+                {{ item.profile }}
                 <v-divider class="mt-8 mb-4"></v-divider>
                 <v-row class="pb-4">
-                  <v-col cols="6" class="d-flex flex-column ">
-                    <span class="pt-2 subtitle-1">Linux</span>
+                  <v-col
+                    v-for="(value, skill) in item.skills"
+                    :key="skill"
+                    cols="6"
+                    class="d-flex flex-column "
+                  >
+                    <span class="pt-2 subtitle-1">{{ skill }}</span>
                     <v-progress-linear
-                      value="80"
+                      :value="value"
                       :color="app.color + ' accent-4'"
-                    ></v-progress-linear>
-
-                    <span class="pt-2 subtitle-1">Apache</span>
-                    <v-progress-linear
-                      value="75"
-                      :color="app.color + ' accent-4'"
-                    ></v-progress-linear>
-
-                    <span class="pt-2 subtitle-1">MySQL</span>
-                    <v-progress-linear
-                      value="70"
-                      :color="app.color + ' accent-3'"
-                    ></v-progress-linear>
-                    <span class="pt-2 subtitle-1">PHP</span>
-                    <v-progress-linear
-                      value="70"
-                      :color="app.color + ' accent-3'"
-                    ></v-progress-linear>
-                    <span class="pt-2 subtitle-1">JS ES6</span>
-                    <v-progress-linear
-                      class="align-self-center"
-                      :color="app.color + ' accent-4'"
-                      :value="75"
-                    ></v-progress-linear>
-                    <span class="pt-2 subtitle-1">Java</span>
-                    <v-progress-linear
-                      class="align-self-center"
-                      :color="app.color + ' accent-1'"
-                      :value="45"
-                    ></v-progress-linear>
-                  </v-col>
-                  <v-col cols="6" class="d-flex flex-column ">
-                    <span class="pt-2 subtitle-1">Mongo</span>
-                    <v-progress-linear
-                      value="55"
-                      :color="app.color + ' accent-2'"
-                    ></v-progress-linear>
-
-                    <span class="pt-2 subtitle-1">Express</span>
-                    <v-progress-linear
-                      :color="app.color + ' accent-4'"
-                      :value="75"
-                    ></v-progress-linear>
-
-                    <span class="pt-2 subtitle-1">Angular</span>
-                    <v-progress-linear
-                      class="align-self-center"
-                      :color="app.color + ' accent-3'"
-                      :value="60"
-                    ></v-progress-linear>
-                    <span class="pt-2 subtitle-1">NodeJS</span>
-                    <v-progress-linear
-                      class="align-self-center"
-                      :color="app.color + ' accent-3'"
-                      :value="70"
-                    ></v-progress-linear>
-                    <span class="pt-2 subtitle-1">React</span>
-                    <v-progress-linear
-                      class="align-self-center"
-                      :color="app.color + ' accent-2'"
-                      :value="50"
-                    ></v-progress-linear>
-                    <span class="pt-2 subtitle-1">Vue</span>
-                    <v-progress-linear
-                      class="align-self-center"
-                      :color="app.color + ' accent-3'"
-                      :value="60"
                     ></v-progress-linear>
                   </v-col>
                 </v-row>
@@ -139,25 +68,23 @@
                 Education History
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <ul>
-                  <li>
-                    <strong>Web Application Development</strong>
-                    <br />
-                    Certificate of Higher Education HNC <small>2020</small>
-                  </li>
-                  <li>
-                    <strong>
-                      Administration of network computer systems
-                    </strong>
-                    <br />
-                    Certificate of Higher Education HNC <small>2013</small>
-                  </li>
-                  <li>
-                    <strong>Telecomunications and computer systems</strong>
-                    <br />
-                    Certificate of Higher Education HNC <small>2009</small>
-                  </li>
-                </ul>
+                <v-timeline dense>
+                  <v-timeline-item
+                    v-for="education in item.education"
+                    :key="education.id"
+                    fill-dot
+                    :icon="education.icon"
+                  >
+                    <div class="py-4">
+                      <h2 class="headline font-weight-light mb-4">
+                        {{ education.name }} <br />
+                        <small>
+                          {{ education.title }} ({{ education.year }})
+                        </small>
+                      </h2>
+                    </div>
+                  </v-timeline-item>
+                </v-timeline>
               </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel>
@@ -166,74 +93,26 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-timeline dense>
-                  <v-timeline-item fill-dot icon="mdi-code-braces">
+                  <v-timeline-item
+                    v-for="experience in item.experience"
+                    :key="experience.id"
+                    fill-dot
+                    :icon="experience.icon"
+                  >
                     <div class="py-4">
                       <h2 class="headline font-weight-light mb-4">
-                        MOODLE WEB DEVELOPER <br />
+                        {{ experience.name }} <br />
                         <small>
-                          Academia de Enseñanza Newton SLU (2015 - Present)
+                          {{ experience.company }} ({{ experience.start }} -
+                          {{ experience.end > 0 ? experience.end : "present" }})
                         </small>
                       </h2>
                       <ul>
-                        <li>
-                          Deplopment an maintenance of a Moodle installation
-                        </li>
-                        <li>
-                          Development of custom Moodle plugins
-                        </li>
-                      </ul>
-                    </div>
-                  </v-timeline-item>
-                  <v-timeline-item fill-dot icon="mdi-code-tags">
-                    <div class="py-4">
-                      <h2 class="headline font-weight-light mb-4">
-                        WEB DEVELOPER <br />
-                        <small>
-                          Freelance (2015 - present)
-                        </small>
-                      </h2>
-                      <ul>
-                        <li>
-                          Design, development and deployment of landing pages
-                          and microsites for small local business and
-                          asociations
-                        </li>
-                      </ul>
-                    </div>
-                  </v-timeline-item>
-                  <v-timeline-item fill-dot icon="mdi-server">
-                    <div class="py-4">
-                      <h2 class="headline font-weight-light mb-4">
-                        SYSTEM ADMINISTRATOR <br />
-                        <small>
-                          Aldan Servicios Jurídicos SL (2013 - 2015)
-                        </small>
-                      </h2>
-                      <ul>
-                        <li>
-                          Design, sizing, deployment and maintenance of
-                          corporate web server
-                        </li>
-                        <li>
-                          Design, develoment and deployment of microsites on our
-                          server
-                        </li>
-                        <li>
-                          In page SEO optimization of the business websites
-                        </li>
-                      </ul>
-                    </div>
-                  </v-timeline-item>
-                  <v-timeline-item fill-dot icon="mdi-router-network">
-                    <div class="py-4">
-                      <h2 class="headline font-weight-light mb-4">
-                        NETWORK INSTALLER <br />
-                        <small>Itegal Servicios TIC (2009 - 2010)</small>
-                      </h2>
-                      <ul>
-                        <li>
-                          Installation and monitoring of enterprise-level local
-                          area networks
+                        <li
+                          v-for="(task, index) in experience.tasks"
+                          :key="index"
+                        >
+                          {{ task }}
                         </li>
                       </ul>
                     </div>
@@ -247,31 +126,22 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-row>
-                  <v-col cols="6" class="text-center">
+                  <v-col
+                    v-for="language in item.languages"
+                    :key="language.name"
+                    cols="6"
+                    class="text-center"
+                  >
                     <v-progress-circular
                       :rotate="360"
                       :size="100"
                       :width="15"
-                      value="100"
+                      :value="language.level"
                       :color="app.color + ' accent-4'"
                     >
-                      Spanish
+                      {{ language.name }}
                     </v-progress-circular>
-                    <span class="d-block pt-2">Native speaker</span>
-                  </v-col>
-                  <v-col cols="6" class="text-center">
-                    <v-progress-circular
-                      :rotate="360"
-                      :size="100"
-                      :width="15"
-                      value="75"
-                      :color="app.color + ' accent-2'"
-                    >
-                      English
-                    </v-progress-circular>
-                    <span class="d-block pt-2">
-                      Advanced writen, intermediate spoken
-                    </span>
+                    <span class="d-block pt-2">{{ language.description }}</span>
                   </v-col>
                 </v-row>
               </v-expansion-panel-content>
@@ -285,6 +155,7 @@
 
 <script>
 import { mapState } from "vuex";
+import fb from "@/plugins/firebase";
 
 import bar from "@/components/bar";
 import navigation from "@/components/navigation";
@@ -300,6 +171,10 @@ export default {
   data() {
     return {
       open: [0],
+      loading: false,
+      about: this.getAboutInfo(),
+      avatar: "",
+      background: "",
       app: require("./config").default
     };
   },
@@ -308,11 +183,36 @@ export default {
   },
   methods: {
     download() {
-      this.$store.dispatch("about/getCv");
+      fb.aboutStore
+        .child("Oscar R.C. Web Developer.pdf")
+        .getDownloadURL()
+        .then(url => {
+          window.open(url, "_blank");
+        });
+    },
+    getImage(image) {
+      return fb.aboutStore.child(image).getDownloadURL();
+    },
+    getAboutInfo() {
+      let about = [];
+
+      this.loading = true;
+
+      fb.aboutCollection.get().then(docs => {
+        docs.forEach(doc => {
+          about.push(doc.data());
+        });
+      });
+
+      return about;
     },
     setSection() {
       this.$store.commit("setSection", 0);
     }
+  },
+  created() {
+    this.getImage("avatar.png").then(url => (this.avatar = url));
+    this.getImage("bg.png").then(url => (this.background = url));
   }
 };
 </script>
