@@ -16,9 +16,24 @@
       <v-col cols="12" md="8" class="px-0 mx-auto">
         <v-tabs v-model="section">
           <v-tabs-items eager v-model="section">
-            <box :box="inbox" @compose="compose = !compose" @remove="remove" />
-            <box :box="sent" @compose="compose = !compose" @remove="remove" />
-            <box :box="trash" @compose="compose = !compose" @remove="remove" />
+            <box
+              :box="inbox"
+              :avatar="avatar"
+              @compose="compose = !compose"
+              @remove="remove"
+            />
+            <box
+              :box="sent"
+              :avatar="avatar"
+              @compose="compose = !compose"
+              @remove="remove"
+            />
+            <box
+              :box="trash"
+              :avatar="avatar"
+              @compose="compose = !compose"
+              @remove="remove"
+            />
           </v-tabs-items>
         </v-tabs>
       </v-col>
@@ -61,9 +76,7 @@
                 <v-subheader class="subtitle-1 pa-0">To: </v-subheader>
                 <v-chip class="ma-2" color="indigo" text-color="white">
                   <v-avatar left>
-                    <v-img
-                      src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
-                    ></v-img>
+                    <v-img :src="avatar"></v-img>
                   </v-avatar>
                   Oscar R.C.
                 </v-chip>
@@ -134,6 +147,7 @@ export default {
       from: "",
       subject: "",
       message: "",
+      avatar: "",
       compose: false,
       loading: false,
       app: require("./config").default
@@ -167,6 +181,9 @@ export default {
 
       return sent;
     },
+    getImage(image) {
+      return fb.aboutStore.child(image).getDownloadURL();
+    },
     send() {
       this.$store
         .dispatch("contact/sendMail", {
@@ -185,6 +202,7 @@ export default {
   created() {
     this.getInbox();
     this.getSent();
+    this.getImage("avatar.png").then(url => (this.avatar = url));
   }
 };
 </script>

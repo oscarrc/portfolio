@@ -25,7 +25,7 @@
           disabled
         >
           <v-list-item-avatar color="green accent-4">
-            <v-img v-if="email.avatar" :src="email.avatar"></v-img>
+            <v-img v-if="avatar" :src="avatar"></v-img>
             <span v-else class="white--text headline">
               {{ email.from.substring(0, 1).toUpperCase() }}
             </span>
@@ -78,7 +78,8 @@ export default {
     box: {
       type: Array,
       required: true
-    }
+    },
+    avatar: String
   },
   methods: {
     remove(index) {

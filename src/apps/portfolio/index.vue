@@ -39,7 +39,7 @@
         :key="index"
       >
         <v-hover v-slot:default="{ hover }">
-          <v-card color="grey lighten-4" class="mx-4">
+          <v-card class="mx-4">
             <v-img :aspect-ratio="16 / 9" :src="p.image">
               <v-expand-transition>
                 <div
@@ -123,8 +123,8 @@ export default {
   computed: {
     ...mapState(["drawer", "section"]),
     filterOptions() {
-      return this.app.projects
-        .map(p => p.technologies)
+      return this.projects
+        .map(p => p.tech)
         .reduce((prev, cur) => prev.concat(cur), [])
         .filter((item, i, arr) => arr.indexOf(item) === i);
     },
@@ -135,9 +135,7 @@ export default {
           p.field.includes(this.app.sections[this.section].name)
       );
 
-      return filtered.filter(p =>
-        this.filters.every(v => p.technologies.includes(v))
-      );
+      return filtered.filter(p => this.filters.every(v => p.tech.includes(v)));
     }
   },
   methods: {

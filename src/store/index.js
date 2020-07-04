@@ -21,7 +21,8 @@ const store = new Vuex.Store({
     launched: false,
     drawer: true,
     section: 0,
-    loading: false
+    loading: false,
+    user: ""
   },
   mutations: {
     toggleDrawer(state) {
