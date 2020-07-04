@@ -141,7 +141,6 @@ export default {
     }
   },
   methods: {
-    handleAction() {},
     getProjects() {
       let projects = [];
 

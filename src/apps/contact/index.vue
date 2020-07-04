@@ -1,9 +1,13 @@
 <template>
   <v-card tile id="app-card">
-    <bar :name="name" :color="color" @Compose="toggleCompose"></bar>
+    <bar
+      :name="app.name"
+      :color="app.color"
+      @Compose="compose = !compose"
+    ></bar>
     <navigation
-      :color="color"
-      :sections="sections || []"
+      :color="app.color"
+      :sections="app.sections || []"
       :status="drawer"
       :active="section"
     >
@@ -12,9 +16,9 @@
       <v-col cols="12" md="8" class="px-0 mx-auto">
         <v-tabs v-model="section">
           <v-tabs-items eager v-model="section">
-            <box :box="inbox" @compose="toggleCompose" @remove="remove" />
-            <box :box="sent" @compose="toggleCompose" @remove="remove" />
-            <box :box="trash" @compose="toggleCompose" @remove="remove" />
+            <box :box="inbox" @compose="compose = !compose" @remove="remove" />
+            <box :box="sent" @compose="compose = !compose" @remove="remove" />
+            <box :box="trash" @compose="compose = !compose" @remove="remove" />
           </v-tabs-items>
         </v-tabs>
       </v-col>
@@ -23,11 +27,11 @@
       max-width="80vw"
       :value="compose"
       hide-overlay
-      @click:outside="toggleCompose"
-      @keydown="toggleCompose"
+      @click:outside="compose = !compose"
+      @keydown="compose = !compose"
     >
       <v-card
-        :loading="loading ? color : loading"
+        :loading="loading ? app.color : loading"
         :tile="
           this.$vuetify.breakpoint.name == 'sm' ||
             this.$vuetify.breakpoint.name == 'xs'
@@ -41,7 +45,7 @@
       >
         <v-card-title class="d-flex py-1 subtitle-1 grey darken-3 text-white">
           New Message
-          <v-btn icon x-small dark class="ml-auto" @click="toggleCompose">
+          <v-btn icon x-small dark class="ml-auto" @click="compose = !compose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
@@ -80,7 +84,7 @@
         </v-card-text>
         <v-card-actions class="px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn :color="color" dark @click="send">
+          <v-btn :color="app.color" dark @click="send">
             <v-icon class="pr-2">mdi-send</v-icon> Enviar
           </v-btn>
         </v-card-actions>
@@ -90,14 +94,14 @@
     <v-fab-transition>
       <v-btn
         v-show="!compose"
-        :color="color"
+        :color="app.color"
         dark
         absolute
         bottom
         right
         fab
         class="fab-button"
-        @click="toggleCompose"
+        @click="compose = !compose"
       >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
@@ -107,6 +111,7 @@
 
 <script>
 import { mapState } from "vuex";
+import fb from "@/plugins/firebase";
 
 import bar from "@/components/bar";
 import navigation from "@/components/navigation";
@@ -121,28 +126,47 @@ export default {
     wrapper,
     box
   },
-  computed: {
-    ...mapState(["drawer", "section"]),
-    ...mapState("contact", [
-      "name",
-      "color",
-      "sections",
-      "actions",
-      "inbox",
-      "sent",
-      "trash",
-      "compose",
-      "loading"
-    ])
-  },
   data() {
     return {
+      inbox: [],
+      sent: [],
+      trash: [],
       from: "",
       subject: "",
-      message: ""
+      message: "",
+      compose: false,
+      loading: false,
+      app: require("./config").default
     };
   },
+  computed: {
+    ...mapState(["drawer", "section"])
+  },
   methods: {
+    getInbox() {
+      fb.contactCollection
+        .where("box", "==", "inbox")
+        .get()
+        .then(docs => {
+          docs.forEach(doc => {
+            this.inbox = doc.data().messages;
+          });
+        });
+    },
+    getSent() {
+      let sent = [];
+
+      fb.contactCollection
+        .where("box", "==", "sent")
+        .get()
+        .then(docs => {
+          docs.forEach(doc => {
+            this.sent = doc.data().messages;
+          });
+        });
+
+      return sent;
+    },
     send() {
       this.$store
         .dispatch("contact/sendMail", {
@@ -156,12 +180,11 @@ export default {
     },
     remove(message) {
       this.$store.commit("contact/moveToTrash", message);
-    },
-    toggleCompose(e) {
-      if (!e || !e.key || (e && e.key == "Escape")) {
-        this.$store.commit("contact/toggleCompose");
-      }
     }
+  },
+  created() {
+    this.getInbox();
+    this.getSent();
   }
 };
 </script>

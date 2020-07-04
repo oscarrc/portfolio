@@ -202,6 +202,7 @@ export default {
         docs.forEach(doc => {
           about.push(doc.data());
         });
+        this.loading = false;
       });
 
       return about;

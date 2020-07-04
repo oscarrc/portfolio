@@ -3,6 +3,8 @@ export default {
   path: "/contact",
   native: true,
   decked: false,
+  database: true,
+  storage: true,
   color: "green",
   actions: [
     {
