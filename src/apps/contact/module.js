@@ -1,31 +1,26 @@
-const defaultContact = () => {
-  let contact = JSON.parse(localStorage.getItem("contact"));
-  let defaultContact;
+import fb from "@/plugins/firebase";
 
-  if (contact) {
-    defaultContact = {
-      ...contact,
-      loading: false,
-      compose: false,
-      error: false
-    };
-  } else {
-    defaultContact = {
-      ...require("./config").default,
-      loading: false,
-      compose: false,
-      error: false
-    };
+const defaultContact = () => {
+  let boxes = {
+    inbox: JSON.parse(localStorage.getItem("inbox")) || [],
+    sent: JSON.parse(localStorage.getItem("sent")) || [],
+    trash: JSON.parse(localStorage.getItem("trash")) || []
+  };
+
+  if (boxes.inbox.length + boxes.sent.length + boxes.trash.length == 0) {
+    fb.contactCollection
+      .where("type", "==", 0)
+      .get()
+      .then(docs => {
+        docs.forEach(doc => {
+          boxes.inbox.push(doc.data());
+        });
+      });
   }
 
-  return defaultContact;
-};
-
-const saveData = state => {
-  delete state.loading;
-  delete state.error;
-  delete state.compose;
-  localStorage.setItem("contact", JSON.stringify(state));
+  return {
+    ...boxes
+  };
 };
 
 export default {
@@ -36,39 +31,24 @@ export default {
       state.loading = true;
       state.error = false;
     },
-    receiveMail(state) {
-      state.inbox.push({
-        from: "Oscar R.C.",
-        subject: "Thank you for contacting",
-        avatar: "https://cdn.vuetifyjs.com/images/profiles/marcus.jpg",
-        message: `<p>Hey there!</p>
-        <p>I've received your email.</p>
-        <p>I've reading it as soon as I could, and rest asure I'll be replying</p>
-        <p>Thank you for writing</p>
-        <p>Cheers</p>`,
-        read: false,
-        active: false,
-        date: new Date()
-      });
+    markAsRead(state, box, index) {
+      state[box][index].read = true;
+    },
+    receiveMail(state, message) {
+      state.inbox.push(message);
     },
     mailSent(state, message) {
-      state.loading = false;
-      state.compose = false;
       state.sent.push(message);
     },
     mailError(state) {
-      state.loading = false;
       state.error = true;
-    },
-    toggleCompose(state) {
-      state.compose = !state.compose;
     },
     moveToTrash(state, message) {
       state.trash.push(message);
     }
   },
   actions: {
-    sendMail({ commit, state }, email) {
+    sendMail({ commit }, email) {
       commit("sendingMail");
       fetch(
         "https://europe-west3-oscarrc-blog-1499165580887.cloudfunctions.net/sendMail",
@@ -78,15 +58,11 @@ export default {
           body: JSON.stringify(email)
         }
       )
-        .then(async res => {
-          let response = await res.json();
+        .then(res => {
+          let response = res.json();
 
           if (response.success) {
             commit("mailSent", email);
-            setTimeout(() => {
-              commit("receiveMail");
-            }, 5000);
-            saveData(state);
           } else {
             commit("mailError");
           }
@@ -94,6 +70,31 @@ export default {
         .catch(() => {
           commit("mailError");
         });
+    },
+    async receiveMail({ commit }) {
+      let messages = [];
+
+      await fb.contactCollection
+        .where("type", "==", 1)
+        .get()
+        .then(docs => {
+          docs.forEach(doc => {
+            messages.push(doc.data());
+          });
+        });
+
+      commit("receiveMail", messages[0]);
+    }
+  },
+  getters: {
+    notifications(state) {
+      let count = 0;
+
+      state.inbox.forEach(m => {
+        if (m.read == false) count++;
+      });
+
+      return count;
     }
   }
 };

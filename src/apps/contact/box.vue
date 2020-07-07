@@ -13,10 +13,9 @@
       <v-subheader>Today</v-subheader>
       <v-divider></v-divider>
       <v-list-group
-        v-model="email.active"
         v-for="(email, index) in box"
         :key="index"
-        @click="email.read = true"
+        @click="read(index)"
       >
         <v-list-item
           slot="activator"
@@ -79,12 +78,21 @@ export default {
       type: Array,
       required: true
     },
-    avatar: String
+    avatar: String,
+    name: String
   },
   methods: {
     remove(index) {
-      this.$emit("remove", this.box[index]);
+      let message = this.box[index];
       this.box.splice(index, 1);
+      if (name != "trash") {
+        this.$store.commit("contact/moveToTrash", message);
+      }
+      this.$emit("removed");
+    },
+    read(index) {
+      this.box[index].read = true;
+      this.$emit("read");
     }
   }
 };

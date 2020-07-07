@@ -9,7 +9,7 @@ export default {
   privacy: false,
   background: {
     name: "default",
-    image: "/img/bg.jpg"
+    image: "/img/bg.png"
   },
   actions: [
     {

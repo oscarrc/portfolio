@@ -42,6 +42,9 @@ const store = new Vuex.Store({
     },
     setLoading(state, status) {
       state.loading = status;
+    },
+    setUser(state, user) {
+      state.user = user;
     }
   },
   actions: {

@@ -6,6 +6,7 @@ const defaultSettings = () => {
 
   if (settings) {
     defaultSettings = {
+      ...require("./config").default,
       ...settings,
       loading: false
     };
@@ -42,14 +43,15 @@ export default {
 
       if (settings.privacy)
         localStorage.setItem("settings", JSON.stringify(settings));
+      else localStorage.clear();
 
       commit("setLoading", false, { root: true });
     },
     resetSettings({ commit }) {
       commit("setLoading", true, { root: true });
-      localStorage.removeItem("settings");
       commit("setSettings", defaultSettings());
       commit("setLoading", false, { root: true });
+      localStorage.removeItem("settings");
     }
   },
   getters: {

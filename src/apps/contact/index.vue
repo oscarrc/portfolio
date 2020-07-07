@@ -18,21 +18,27 @@
           <v-tabs-items eager v-model="section">
             <box
               :box="inbox"
+              name="inbox"
               :avatar="avatar"
               @compose="compose = !compose"
-              @remove="remove"
+              @remove="saveData"
+              @read="saveData"
             />
             <box
               :box="sent"
+              name="sent"
               :avatar="avatar"
               @compose="compose = !compose"
-              @remove="remove"
+              @remove="saveData"
+              @read="saveData"
             />
             <box
               :box="trash"
               :avatar="avatar"
+              name="trash"
               @compose="compose = !compose"
-              @remove="remove"
+              @remove="saveData"
+              @read="saveData"
             />
           </v-tabs-items>
         </v-tabs>
@@ -43,7 +49,7 @@
       :value="compose"
       hide-overlay
       @click:outside="compose = !compose"
-      @keydown="compose = !compose"
+      @keydown="closeEsc"
     >
       <v-card
         :loading="loading ? app.color : loading"
@@ -97,7 +103,7 @@
         </v-card-text>
         <v-card-actions class="px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn :color="app.color" dark @click="send">
+          <v-btn :color="app.color" dark @click="sendMessage">
             <v-icon class="pr-2">mdi-send</v-icon> Enviar
           </v-btn>
         </v-card-actions>
@@ -124,7 +130,6 @@
 
 <script>
 import { mapState } from "vuex";
-import fb from "@/plugins/firebase";
 
 import bar from "@/components/bar";
 import navigation from "@/components/navigation";
@@ -141,50 +146,23 @@ export default {
   },
   data() {
     return {
-      inbox: [],
-      sent: [],
-      trash: [],
       from: "",
       subject: "",
       message: "",
-      avatar: "",
+      avatar: "img/avatar.png",
       compose: false,
       loading: false,
       app: require("./config").default
     };
   },
   computed: {
-    ...mapState(["drawer", "section"])
+    ...mapState(["drawer", "section"]),
+    ...mapState("contact", ["inbox", "sent", "trash"]),
+    ...mapState("settings", ["privacy"])
   },
   methods: {
-    getInbox() {
-      fb.contactCollection
-        .where("box", "==", "inbox")
-        .get()
-        .then(docs => {
-          docs.forEach(doc => {
-            this.inbox = doc.data().messages;
-          });
-        });
-    },
-    getSent() {
-      let sent = [];
-
-      fb.contactCollection
-        .where("box", "==", "sent")
-        .get()
-        .then(docs => {
-          docs.forEach(doc => {
-            this.sent = doc.data().messages;
-          });
-        });
-
-      return sent;
-    },
-    getImage(image) {
-      return fb.aboutStore.child(image).getDownloadURL();
-    },
-    send() {
+    sendMessage() {
+      this.loading = true;
       this.$store
         .dispatch("contact/sendMail", {
           from: this.from,
@@ -192,17 +170,30 @@ export default {
           message: this.message
         })
         .then(() => {
-          this.$refs.mailForm.reset();
+          setTimeout(() => {
+            this.$refs.mailForm.reset();
+            this.compose = false;
+            this.loading = false;
+            this.$store.dispatch("contact/receiveMail");
+          }, 2000);
+
+          if (!this.privacy) {
+            this.$store.dispatch("contact/saveData");
+          }
         });
     },
-    remove(message) {
-      this.$store.commit("contact/moveToTrash", message);
+    closeEsc(key) {
+      if (key.code == "Escape") {
+        this.closeApp();
+      }
+    },
+    saveData() {
+      if (this.privacy) {
+        localStorage.setItem("inbox", JSON.stringify(this.inbox));
+        localStorage.setItem("sent", JSON.stringify(this.sent));
+        localStorage.setItem("trash", JSON.stringify(this.trash));
+      }
     }
-  },
-  created() {
-    this.getInbox();
-    this.getSent();
-    this.getImage("avatar.png").then(url => (this.avatar = url));
   }
 };
 </script>

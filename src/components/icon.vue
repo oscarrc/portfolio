@@ -2,7 +2,7 @@
   <v-col cols="3" class="d-flex justify-center text-center" @click="clicked">
     <v-sheet class="icon" color="transparent">
       <v-badge
-        :value="app.notifications ? app.notifications() : 0"
+        :value="notifications ? notifications : 0"
         content="1"
         color="red"
         overlap
@@ -46,10 +46,14 @@ export default {
       color: {
         type: String,
         required: true
-      },
-      notifications: {
-        type: Number
       }
+    }
+  },
+  computed: {
+    notifications() {
+      return this.$store.getters[
+        this.app.name.toLowerCase() + "/notifications"
+      ];
     }
   },
   methods: {

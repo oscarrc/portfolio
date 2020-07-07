@@ -173,8 +173,8 @@ export default {
       open: [0],
       loading: false,
       about: this.getAboutInfo(),
-      avatar: "",
-      background: "",
+      avatar: "/img/avatar.png",
+      background: "/img/bg.png",
       app: require("./config").default
     };
   },
@@ -210,10 +210,6 @@ export default {
     setSection() {
       this.$store.commit("setSection", 0);
     }
-  },
-  created() {
-    this.getImage("avatar.png").then(url => (this.avatar = url));
-    this.getImage("bg.png").then(url => (this.background = url));
   }
 };
 </script>
