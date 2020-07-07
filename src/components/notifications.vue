@@ -4,7 +4,7 @@
       class="mr-2 notification"
       src="/img/logo.svg"
       contain
-      alt="Oscar R.C. Web Developer"
+      alt="Oscar R.C.  Web Developer"
     ></v-img>
     Oscar R.C.
     <v-spacer></v-spacer>
