@@ -174,8 +174,11 @@ export default {
             this.$refs.mailForm.reset();
             this.compose = false;
             this.loading = false;
-            this.$store.dispatch("contact/receiveMail");
           }, 2000);
+
+          setTimeout(() => {
+            this.$store.dispatch("contact/receiveMail");
+          }, 5000);
 
           if (!this.privacy) {
             this.$store.dispatch("contact/saveData");

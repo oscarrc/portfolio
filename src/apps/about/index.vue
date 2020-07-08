@@ -14,10 +14,15 @@
     >
     </navigation>
     <wrapper v-if="!loading">
-      <v-col cols="12" md="8" class="px-0 mx-auto">
+      <v-col cols="12" md="8" class="px-0 py-0 p-sm-auto mx-auto">
         <v-card tile v-for="(item, index) in about" :key="index">
-          <v-img height="100%" max-height="20vh" :src="background">
-            <v-row class="fill-height">
+          <v-img
+            height="100%"
+            aspect-ratio="4"
+            max-height="187px"
+            :src="background"
+          >
+            <v-row class="fill-height" align="end">
               <v-col class="d-flex" align-self="start">
                 <v-avatar class="profile" color="grey" size="164" tile>
                   <v-img :src="avatar"></v-img>
