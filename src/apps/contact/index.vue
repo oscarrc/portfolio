@@ -71,8 +71,13 @@
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-form ref="mailForm">
-            <v-text-field v-model="from" single-line>
+          <v-form ref="mailForm" v-model="valid">
+            <v-text-field
+              v-model="from"
+              single-line
+              :rules="rules.from"
+              required
+            >
               <template v-slot:prepend-inner>
                 <v-subheader class="subtitle-1 pa-0">From: </v-subheader>
               </template>
@@ -90,13 +95,17 @@
             </v-text-field>
             <v-text-field
               label="Subject"
+              :rules="rules.subject"
               v-model="subject"
               single-line
+              required
             ></v-text-field>
             <v-textarea
               v-model="message"
+              :rules="rules.message"
               counter
               single-line
+              required
               label="Write an email"
             ></v-textarea>
           </v-form>
@@ -152,7 +161,18 @@ export default {
       avatar: "img/avatar.png",
       compose: false,
       loading: false,
-      app: require("./config").default
+      valid: false,
+      app: require("./config").default,
+      rules: {
+        from: [
+          v => !!v || "You must write your email",
+          v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        ],
+        subject: [v => !!v || "What do you want to talk about"],
+        message: [
+          v => !!v || "Please, elaborate the subject a little bit more."
+        ]
+      }
     };
   },
   computed: {
@@ -162,28 +182,31 @@ export default {
   },
   methods: {
     sendMessage() {
-      this.loading = true;
-      this.$store
-        .dispatch("contact/sendMail", {
-          from: this.from,
-          subject: this.subject,
-          message: this.message
-        })
-        .then(() => {
-          setTimeout(() => {
-            this.$refs.mailForm.reset();
-            this.compose = false;
-            this.loading = false;
-          }, 2000);
+      if (this.valid) {
+        this.loading = true;
 
-          setTimeout(() => {
-            this.$store.dispatch("contact/receiveMail");
-          }, 5000);
+        this.$store
+          .dispatch("contact/sendMail", {
+            from: this.from,
+            subject: this.subject,
+            message: this.message
+          })
+          .then(() => {
+            setTimeout(() => {
+              this.$refs.mailForm.reset();
+              this.compose = false;
+              this.loading = false;
+            }, 2000);
 
-          if (!this.privacy) {
-            this.$store.dispatch("contact/saveData");
-          }
-        });
+            setTimeout(() => {
+              this.$store.dispatch("contact/receiveMail");
+            }, 5000);
+
+            if (!this.privacy) {
+              this.$store.dispatch("contact/saveData");
+            }
+          });
+      }
     },
     closeEsc(key) {
       if (key.code == "Escape") {
