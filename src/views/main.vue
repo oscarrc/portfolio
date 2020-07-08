@@ -1,5 +1,9 @@
 <template>
-  <v-app>
+  <v-app
+    id="screen"
+    ref="el"
+    :style="{ backgroundImage: `url(&quot;${background.image}&quot;)` }"
+  >
     <notifications></notifications>
     <v-main class="pa-0">
       <v-window class="fullscreen">
@@ -20,7 +24,7 @@
       fullscreen
       :value="launched"
       @click:outside="closeApp"
-      @keydown="closeApp"
+      @keydown="closeEsc"
     >
       <router-view></router-view>
     </v-dialog>
@@ -38,10 +42,10 @@
 <script>
 import { mapState } from "vuex";
 
-import notifications from "@/components/ui/notifications";
-import deck from "@/components/ui/deck";
-import display from "@/components/ui/display";
-import icon from "@/components/ui/icon";
+import notifications from "@/components/notifications";
+import deck from "@/components/deck";
+import display from "@/components/display";
+import icon from "@/components/icon";
 
 export default {
   name: "Main",
@@ -52,14 +56,15 @@ export default {
     icon
   },
   computed: {
-    ...mapState("apps", ["list", "launched"])
+    ...mapState(["list", "launched"]),
+    ...mapState("settings", ["background"])
   },
   methods: {
     launchApp(app) {
       if (app.native) {
-        this.$router.push(app.launch);
+        this.$router.push(app.path);
       } else {
-        window.open(app.launch, "_blank");
+        window.open(app.path, "_blank");
       }
     },
     getApps(decked) {
@@ -69,6 +74,11 @@ export default {
     },
     closeApp() {
       this.$router.push("/");
+    },
+    closeEsc(key) {
+      if (key.code == "Escape") {
+        this.closeApp();
+      }
     }
   }
 };

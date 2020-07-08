@@ -6,6 +6,21 @@
     z-index: 0;
 }
 
+.card-overlay{
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+}
+
+.card-overlay a, .card-overlay a:hover{
+  color: white;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
 #notifications{
     z-index: 1000;
 }
@@ -29,10 +44,14 @@
     height: 100%;
 }
 
+#app-card .v-tabs .v-slide-group {
+  display: none !important;
+}
+
 #app-wrapper{
     overflow-y: auto;
     height: 100%;
-    padding-top: 64px !important;
+    padding-top: 75px !important;
 }
 
 #app-navigation{
@@ -78,9 +97,92 @@
 }
 
 .fullscreen{
-    height: 100vh;
+    max-height: 75vh;
 }
 
 .menu-item{
     cursor: pointer;
 }
+
+.v-btn--fab.v-size--default.v-btn--absolute.v-btn--bottom{
+    bottom: 16px;
+    z-index: 500;
+}
+
+[v-cloak] {display: none}
+
+#loader{
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+  
+  .notification{
+      opacity: 0.75;
+      height: 14px;
+      max-width: 25px;
+  }
+
+  .email-body p{
+    padding-top: 10px;
+  }
