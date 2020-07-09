@@ -20,6 +20,7 @@
               :box="inbox"
               name="inbox"
               :strings="app.strings[language]"
+              :language="language"
               :avatar="avatar"
               @compose="compose = !compose"
               @remove="saveData"

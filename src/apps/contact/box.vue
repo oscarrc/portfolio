@@ -32,7 +32,7 @@
 
           <v-list-item-content>
             <v-list-item-title :class="!email.read ? 'font-weight-black' : ''">
-              {{ email.subject }}
+              {{ email.subject[language] }}
             </v-list-item-title>
             <v-list-item-subtitle
               :class="!email.read ? 'font-weight-black' : ''"
@@ -44,7 +44,7 @@
         <v-list-item-content
           class="px-8 email-body"
           color="text-light"
-          v-html="email.message"
+          v-html="email.message[language]"
         >
         </v-list-item-content>
         <v-list-item-action class="d-flex flex-row justify-end px-8">
@@ -80,6 +80,7 @@ export default {
     },
     avatar: String,
     name: String,
+    language: String,
     strings: Object
   },
   methods: {

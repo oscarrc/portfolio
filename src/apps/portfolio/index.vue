@@ -75,7 +75,7 @@
                 {{ p.name }}
               </h3>
               <div class="font-weight-light title mb-2">
-                {{ p.description }}
+                {{ p.description[language] }}
               </div>
             </v-card-text>
             <v-card-actions>
@@ -122,6 +122,7 @@ export default {
   },
   computed: {
     ...mapState(["drawer", "section"]),
+    ...mapState("settings", ["language"]),
     filterOptions() {
       return this.projects
         .map(p => p.tech)
