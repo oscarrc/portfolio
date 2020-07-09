@@ -86,7 +86,7 @@ export default {
     },
     es_GL: {
       general: "Axustes xerais",
-      theme: "Tema oscuyro",
+      theme: "Tema oscuro",
       dark: "Activar tema oscuro",
       background: "Imaxe de fondo",
       image: "por defecto",

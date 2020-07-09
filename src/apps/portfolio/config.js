@@ -45,5 +45,16 @@ export default {
       },
       icon: "mdi-xml"
     }
-  ]
+  ],
+  strings: {
+    en_US: {
+      visit: "Visit"
+    },
+    es_ES: {
+      visit: "Visitar"
+    },
+    es_GL: {
+      visit: "Visitar"
+    }
+  }
 };

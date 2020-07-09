@@ -49,7 +49,8 @@
                   style="height: 100%;"
                 >
                   <a :href="p.url" target="_BLANK" class="white--text">
-                    <v-icon dark class="pb-2">mdi-open-in-new</v-icon> Visit
+                    <v-icon dark class="pb-2">mdi-open-in-new</v-icon>
+                    {{ app.strings[language].visit }}
                   </a>
                 </div>
               </v-expand-transition>

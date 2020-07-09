@@ -65,9 +65,12 @@ export default {
           network = false;
           break;
         default:
+          // network = isOnline.value
+          //   ? "mdi-ethernet-cable"
+          //   : "mdi-ethernet-cable-off";
           network = isOnline.value
-            ? "mdi-ethernet-cable"
-            : "mdi-ethernet-cable-off";
+            ? "mdi-wifi-strength-4"
+            : "mdi-wifi-strength-alert-outline";
           break;
       }
 

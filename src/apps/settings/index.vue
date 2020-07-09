@@ -32,13 +32,13 @@
                   {{ app.strings[language].general }}
                 </v-card-title>
                 <v-card-subtitle class="pt-4 pb-0">{{
-                  app.strings[language].dark
+                  app.strings[language].theme
                 }}</v-card-subtitle>
                 <v-switch
                   class="px-4"
                   inset
                   v-model="values.dark"
-                  label="Enable dark theme"
+                  :label="app.strings[language].dark"
                 ></v-switch>
                 <v-divider></v-divider>
                 <v-card-subtitle class="pt-4 pb-0">
