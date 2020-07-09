@@ -11,7 +11,7 @@
   >
     <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
 
-    <v-toolbar-title>{{ name }}</v-toolbar-title>
+    <v-toolbar-title>{{ name[language] }}</v-toolbar-title>
 
     <v-spacer></v-spacer>
 
@@ -21,7 +21,7 @@
       class="ma-2"
       large
       icon
-      @click="$emit(actions[0].name)"
+      @click="$emit(actions[0].name.en_US)"
     >
       <v-icon>{{ actions[0].icon }}</v-icon>
     </v-btn>
@@ -35,12 +35,12 @@
       <v-list>
         <v-list-item
           v-for="action in moreActions"
-          :key="action.name"
+          :key="action.name[language]"
           ripple
           class="menu-item"
         >
-          <v-list-item-title @click="$emit(action.name)">
-            {{ action.name }}
+          <v-list-item-title @click="$emit(action.name.en_US)">
+            {{ action.name[language] }}
           </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -49,11 +49,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "bar",
   props: {
     name: {
-      type: String,
+      type: Object,
       required: true
     },
     color: {
@@ -69,6 +71,7 @@ export default {
     }
   },
   computed: {
+    ...mapState("settings", ["language"]),
     moreActions: function() {
       return this.actions ? this.actions.slice(1, this.actions.length) : [];
     }

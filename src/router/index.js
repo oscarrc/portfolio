@@ -11,7 +11,7 @@ const appRoutes = () => {
     let config = require("@/apps" + x.substr(1)).default;
     return {
       path: config.path,
-      name: config.name,
+      name: config.name.en_US,
       component: () =>
         import(`@/apps${x.substr(1).replace("config.js", "index")}`),
       meta: {

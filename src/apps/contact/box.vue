@@ -10,7 +10,7 @@
           : 2
       "
     >
-      <v-subheader>Today</v-subheader>
+      <v-subheader>{{ strings.today }}</v-subheader>
       <v-divider></v-divider>
       <v-list-group
         v-for="(email, index) in box"
@@ -64,7 +64,7 @@
       "
     >
       <v-card-title class="h2">
-        There are no messages
+        {{ strings.empty }}
       </v-card-title>
     </v-card>
   </v-tab-item>
@@ -79,7 +79,8 @@ export default {
       required: true
     },
     avatar: String,
-    name: String
+    name: String,
+    strings: Object
   },
   methods: {
     remove(index) {

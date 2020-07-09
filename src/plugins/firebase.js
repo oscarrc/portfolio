@@ -28,14 +28,14 @@ require
     let config = require("@/apps" + x.substr(1)).default;
 
     if (config.storage)
-      stores[config.name.toLowerCase() + "Store"] = storage.ref(
-        config.name.toLowerCase()
+      stores[config.name.en_US.toLowerCase() + "Store"] = storage.ref(
+        config.name.en_US.toLowerCase()
       );
 
     if (config.database)
-      collections[config.name.toLowerCase() + "Collection"] = db.collection(
-        config.name.toLowerCase()
-      );
+      collections[
+        config.name.en_US.toLowerCase() + "Collection"
+      ] = db.collection(config.name.en_US.toLowerCase());
   });
 
 export default {

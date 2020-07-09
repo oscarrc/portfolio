@@ -1,5 +1,9 @@
 export default {
-  name: "Portfolio",
+  name: {
+    en_US: "Portfolio",
+    es_ES: "Portfolio",
+    es_GL: "Portfolio"
+  },
   path: "/portfolio",
   native: true,
   decked: false,
@@ -8,21 +12,37 @@ export default {
   color: "purple",
   actions: [
     {
-      name: "Filter",
+      name: {
+        en_US: "Filter",
+        es_ES: "Filtrar",
+        es_GL: "Filtrar"
+      },
       icon: "mdi-filter"
     }
   ],
   sections: [
     {
-      name: "All",
+      name: {
+        en_US: "All",
+        es_ES: "Todos",
+        es_GL: "Todos"
+      },
       icon: "mdi-inbox"
     },
     {
-      name: "Backend",
+      name: {
+        en_US: "Backend",
+        es_ES: "Backend",
+        es_GL: "Backend"
+      },
       icon: "mdi-code-braces"
     },
     {
-      name: "Frontend",
+      name: {
+        en_US: "Frontend",
+        es_ES: "Frontend",
+        es_GL: "Frontend"
+      },
       icon: "mdi-xml"
     }
   ]

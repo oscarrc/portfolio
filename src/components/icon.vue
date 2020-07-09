@@ -13,12 +13,16 @@
           :src="require(`@/apps${app.icon}`)"
         ></v-img>
       </v-badge>
-      <span v-if="!app.decked" class="text-white" dark>{{ app.name }}</span>
+      <span v-if="!app.decked" class="text-white" dark>{{
+        app.name[language]
+      }}</span>
     </v-sheet>
   </v-col>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "icon",
   props: {
@@ -28,7 +32,7 @@ export default {
         required: true
       },
       name: {
-        type: String,
+        type: Object,
         required: true
       },
       launch: {
@@ -50,9 +54,10 @@ export default {
     }
   },
   computed: {
+    ...mapState("settings", ["background", "language"]),
     notifications() {
       return this.$store.getters[
-        this.app.name.toLowerCase() + "/notifications"
+        this.app.name.en_US.toLowerCase() + "/notifications"
       ];
     }
   },

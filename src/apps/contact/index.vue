@@ -19,6 +19,7 @@
             <box
               :box="inbox"
               name="inbox"
+              :strings="app.strings[language]"
               :avatar="avatar"
               @compose="compose = !compose"
               @remove="saveData"
@@ -27,6 +28,7 @@
             <box
               :box="sent"
               name="sent"
+              :strings="app.strings[language]"
               :avatar="avatar"
               @compose="compose = !compose"
               @remove="saveData"
@@ -34,6 +36,7 @@
             />
             <box
               :box="trash"
+              :strings="app.strings[language]"
               :avatar="avatar"
               name="trash"
               @compose="compose = !compose"
@@ -65,7 +68,7 @@
         "
       >
         <v-card-title class="d-flex py-1 subtitle-1 grey darken-3 text-white">
-          New Message
+          {{ app.strings[language].new }}
           <v-btn icon x-small dark class="ml-auto" @click="compose = !compose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -79,12 +82,16 @@
               required
             >
               <template v-slot:prepend-inner>
-                <v-subheader class="subtitle-1 pa-0">From: </v-subheader>
+                <v-subheader class="subtitle-1 pa-0"
+                  >{{ app.strings[language].from }}:
+                </v-subheader>
               </template>
             </v-text-field>
             <v-text-field readonly single-line>
               <template v-slot:prepend-inner>
-                <v-subheader class="subtitle-1 pa-0">To: </v-subheader>
+                <v-subheader class="subtitle-1 pa-0"
+                  >{{ app.strings[language].to }}:
+                </v-subheader>
                 <v-chip class="ma-2" color="indigo" text-color="white">
                   <v-avatar left>
                     <v-img :src="avatar"></v-img>
@@ -94,7 +101,7 @@
               </template>
             </v-text-field>
             <v-text-field
-              label="Subject"
+              :label="app.strings[language].subject"
               :rules="rules.subject"
               v-model="subject"
               single-line
@@ -106,14 +113,15 @@
               counter
               single-line
               required
-              label="Write an email"
+              :label="app.strings[language].message"
             ></v-textarea>
           </v-form>
         </v-card-text>
         <v-card-actions class="px-6 pb-6">
           <v-spacer></v-spacer>
           <v-btn :color="app.color" dark @click="sendMessage">
-            <v-icon class="pr-2">mdi-send</v-icon> Enviar
+            <v-icon class="pr-2">mdi-send</v-icon>
+            {{ app.strings[language].send }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -165,20 +173,18 @@ export default {
       app: require("./config").default,
       rules: {
         from: [
-          v => !!v || "You must write your email",
-          v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+          v => !!v || this.app.strings[this.language].no_email,
+          v => /.+@.+\..+/.test(v) || this.app.strings[this.language].bad_email
         ],
-        subject: [v => !!v || "What do you want to talk about"],
-        message: [
-          v => !!v || "Please, elaborate the subject a little bit more."
-        ]
+        subject: [v => !!v || this.app.strings[this.language].no_subject],
+        message: [v => !!v || this.app.strings[this.language].no_message]
       }
     };
   },
   computed: {
     ...mapState(["drawer", "section"]),
     ...mapState("contact", ["inbox", "sent", "trash"]),
-    ...mapState("settings", ["privacy"])
+    ...mapState("settings", ["privacy", "language"])
   },
   methods: {
     sendMessage() {

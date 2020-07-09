@@ -9,13 +9,13 @@
       >
         <v-list-item
           v-for="(section, index) in sections"
-          :key="section.name"
+          :key="section.name[language]"
           @click="setActive(index)"
         >
           <v-list-item-icon>
             <v-icon>{{ section.icon }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>{{ section.name }}</v-list-item-title>
+          <v-list-item-title>{{ section.name[language] }}</v-list-item-title>
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "navigation",
   props: {
@@ -42,6 +44,9 @@ export default {
       type: Number,
       required: true
     }
+  },
+  computed: {
+    ...mapState("settings", ["language"])
   },
   methods: {
     setActive(index) {

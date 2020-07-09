@@ -47,7 +47,7 @@
           <v-expansion-panels accordion :value="section">
             <v-expansion-panel>
               <v-expansion-panel-header @click="setSection">
-                Personal Profile
+                {{ app.strings[language].profile }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 {{ item.profile }}
@@ -70,7 +70,7 @@
             </v-expansion-panel>
             <v-expansion-panel>
               <v-expansion-panel-header>
-                Education History
+                {{ app.strings[language].education }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-timeline dense>
@@ -94,7 +94,7 @@
             </v-expansion-panel>
             <v-expansion-panel>
               <v-expansion-panel-header>
-                Work Experience
+                {{ app.strings[language].experience }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-timeline dense>
@@ -127,7 +127,7 @@
             </v-expansion-panel>
             <v-expansion-panel>
               <v-expansion-panel-header>
-                Languages
+                {{ app.strings[language].languages }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-row>
@@ -184,7 +184,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["drawer", "section"])
+    ...mapState(["drawer", "section"]),
+    ...mapState("settings", ["language"])
   },
   methods: {
     download() {

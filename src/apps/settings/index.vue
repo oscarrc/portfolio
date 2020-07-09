@@ -29,9 +29,11 @@
                 "
               >
                 <v-card-title>
-                  General Settings
+                  {{ app.strings[language].general }}
                 </v-card-title>
-                <v-card-subtitle class="pt-4 pb-0">Dark theme</v-card-subtitle>
+                <v-card-subtitle class="pt-4 pb-0">{{
+                  app.strings[language].dark
+                }}</v-card-subtitle>
                 <v-switch
                   class="px-4"
                   inset
@@ -40,7 +42,7 @@
                 ></v-switch>
                 <v-divider></v-divider>
                 <v-card-subtitle class="pt-4 pb-0">
-                  Background Image
+                  {{ app.strings[language].background }}
                 </v-card-subtitle>
                 <v-file-input
                   @change="handleImage"
@@ -50,7 +52,9 @@
                   prepend-icon="mdi-file-image"
                 ></v-file-input>
                 <v-divider></v-divider>
-                <v-card-subtitle class="pt-4 pb-0">Language</v-card-subtitle>
+                <v-card-subtitle class="pt-4 pb-0">{{
+                  app.strings[language].language
+                }}</v-card-subtitle>
                 <v-select
                   v-model="values.language"
                   class="px-4"
@@ -58,11 +62,13 @@
                   prepend-icon="mdi-translate"
                 ></v-select>
                 <v-divider></v-divider>
-                <v-card-subtitle class="pt-4 pb-0">Privacy</v-card-subtitle>
+                <v-card-subtitle class="pt-4 pb-0">{{
+                  app.strings[language].privacy
+                }}</v-card-subtitle>
                 <v-switch
                   class="px-4"
                   inset
-                  label="Persistent settings"
+                  :label="app.strings[language].persistent"
                   v-model="values.privacy"
                 ></v-switch>
               </v-card>
@@ -78,7 +84,7 @@
                 "
               >
                 <v-card-title>
-                  License information
+                  {{ app.strings[language].license }}
                 </v-card-title>
                 <v-card-subtitle class="pt-4">
                   Oscar R.C.
@@ -253,15 +259,15 @@
                 "
               >
                 <v-card-title>
-                  Factory Reset
+                  {{ app.strings[language].reset }}
                 </v-card-title>
                 <v-card-text>
-                  By clicking the following button you'll resetting this app to
-                  its initial state. <strong>¿Are you sure?</strong>
+                  {{ app.strings[language].reset_text }}
+                  <strong> {{ app.strings[language].reset_sure }}</strong>
                 </v-card-text>
                 <v-card-actions class="pa-4">
                   <v-btn color="error" @click="reset" :loading="loading">
-                    Reset to defaults
+                    {{ app.strings[language].reset_button }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -314,6 +320,7 @@ export default {
   },
   data() {
     return {
+      app: require("./config").default,
       languages: [
         {
           text: "English",
@@ -355,7 +362,7 @@ export default {
 
         reader.readAsDataURL(e);
       } else {
-        this.values.background.name = "default";
+        this.values.background.name = this.app.strings[this.language].image;
         this.values.background.image = "/img/bg.jpg";
       }
     },
