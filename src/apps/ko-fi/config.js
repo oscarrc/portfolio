@@ -6,5 +6,5 @@ export default {
   },
   path: "https://ko-fi.com/oscarrc",
   native: false,
-  decked: true
+  decked: false
 };
