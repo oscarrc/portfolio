@@ -134,7 +134,7 @@ export default {
       let filtered = this.projects.filter(
         p =>
           this.section == 0 ||
-          p.field.includes(this.app.sections[this.section].name)
+          p.field.includes(this.app.sections[this.section][this.language].name)
       );
 
       return filtered.filter(p => this.filters.every(v => p.tech.includes(v)));
