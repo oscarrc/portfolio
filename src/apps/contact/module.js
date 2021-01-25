@@ -61,7 +61,7 @@ export default {
         .then(res => {
           let response = res.json();
 
-          if (response.success) {
+          if (response.success === true) {
             commit("mailSent", email);
           } else {
             commit("mailError");
