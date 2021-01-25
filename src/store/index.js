@@ -19,7 +19,7 @@ const store = new Vuex.Store({
   state: {
     list: appList(),
     launched: false,
-    drawer: true,
+    drawer: false,
     section: 0,
     loading: false,
     user: ""
