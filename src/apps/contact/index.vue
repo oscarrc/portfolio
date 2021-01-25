@@ -30,6 +30,7 @@
               :box="sent"
               name="sent"
               :strings="app.strings[language]"
+              :language="language"
               :avatar="avatar"
               @compose="compose = !compose"
               @removed="saveData"
@@ -38,6 +39,7 @@
             <box
               :box="trash"
               :strings="app.strings[language]"
+              :language="language"
               :avatar="avatar"
               name="trash"
               @compose="compose = !compose"
