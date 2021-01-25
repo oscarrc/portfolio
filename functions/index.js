@@ -49,12 +49,12 @@ exports.sendMail = functions
 
       return transporter.sendMail(sentMail, (err, info) => {
         if (err) {
-          return res.send({ success: false });
+          return res.send({ success: err });
         }
 
         return transporter.sendMail(ackMail, (err, info) => {
           if (err) {
-            return res.send({ success: false });
+            return res.send({ success: err });
           }
           return res.send({ success: true });
         });
