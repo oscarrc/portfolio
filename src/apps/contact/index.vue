@@ -23,7 +23,7 @@
               :language="language"
               :avatar="avatar"
               @compose="compose = !compose"
-              @remove="saveData"
+              @removed="saveData"
               @read="saveData"
             />
             <box
@@ -32,7 +32,7 @@
               :strings="app.strings[language]"
               :avatar="avatar"
               @compose="compose = !compose"
-              @remove="saveData"
+              @removed="saveData"
               @read="saveData"
             />
             <box
@@ -41,7 +41,7 @@
               :avatar="avatar"
               name="trash"
               @compose="compose = !compose"
-              @remove="saveData"
+              @removed="saveData"
               @read="saveData"
             />
           </v-tabs-items>
@@ -190,29 +190,28 @@ export default {
   methods: {
     sendMessage() {
       if (this.valid) {
+        const message = {
+          from: this.from,
+          subject: this.subject,
+          message: this.message
+        };
+
         this.loading = true;
 
-        this.$store
-          .dispatch("contact/sendMail", {
-            from: this.from,
-            subject: this.subject,
-            message: this.message
-          })
-          .then(() => {
-            setTimeout(() => {
-              this.$refs.mailForm.reset();
-              this.compose = false;
-              this.loading = false;
-            }, 2000);
+        this.$store.dispatch("contact/sendMail", message).then(() => {
+          setTimeout(() => {
+            this.$refs.mailForm.reset();
+            this.$store.commit("contact/mailSent", message);
+            this.compose = false;
+            this.loading = false;
+          }, 2000);
 
-            setTimeout(() => {
-              this.$store.dispatch("contact/receiveMail");
-            }, 5000);
+          setTimeout(() => {
+            this.$store.dispatch("contact/receiveMail");
+          }, 5000);
 
-            if (!this.privacy) {
-              this.$store.dispatch("contact/saveData");
-            }
-          });
+          this.saveData();
+        });
       }
     },
     closeEsc(key) {
