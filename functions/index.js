@@ -28,12 +28,14 @@ admin.initializeApp();
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    type: "OAuth2",
-    user: process.env.USER,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-    accessToken: process.env.ACCESS_TOKEN
+    XOauth2: {
+      // type: "OAuth2",
+      user: process.env.USER,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      refreshToken: process.env.REFRESH_TOKEN,
+      // accessToken: process.env.ACCESS_TOKEN
+    }
   }
 });
 
@@ -67,7 +69,7 @@ exports.sendMail = functions
 
       return transporter.sendMail(sentMail, (err, info) => {
         if (err) return res.status(500).send({ success: err });
-        
+
         return transporter.sendMail(ackMail, (err, info) => {
           if (err) return res.status(500).send({ success: err });
           return res.send({ success: true });
