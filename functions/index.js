@@ -4,39 +4,35 @@ const nodemailer = require("nodemailer");
 const cors = require("cors")({ origin: true });
 const dotenv = require("dotenv");
 
-// const { google } = require("googleapis");
-// const OAuth2 = google.auth.OAuth2;
-
-// const oauth2Client = new OAuth2(
-//   process.env.CLIENT_ID,
-//   process.env.CLIENT_SECRET,
-//   "https://developers.google.com/oauthplayground"
-// );
-
 dotenv.config();
 admin.initializeApp();
 
-// oauth2Client.setCredentials({
-//   refresh_token: process.env.REFRESH_TOKEN
-// });
-
-// const accessToken = oauth2Client
-//   .getAccessToken()
-//   .then(token => token)
-//   .catch(err => console.log(err));
+let auth = {
+  user: process.env.USER,
+  refreshToken: process.env.REFRESH_TOKEN,
+  accessToken: process.env.ACCESS_TOKEN,
+  expires: new Date().getTime() + 2000
+};
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    XOauth2: {
-      // type: "OAuth2",
-      user: process.env.USER,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: process.env.REFRESH_TOKEN,
-      // accessToken: process.env.ACCESS_TOKEN
-    }
+    type: "OAuth2",
+    user: process.env.USER,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: process.env.ACCESS_TOKEN
   }
+});
+
+transporter.on("token", token => {
+  auth.accessToken = token.accessToken;
+  auth.expires = token.expires;
+  console.log("A new access token was generated");
+  console.log("User: %s", token.user);
+  console.log("Access Token: %s", token.accessToken);
+  console.log("Expires: %s", new Date(token.expires));
 });
 
 exports.sendMail = functions
@@ -68,10 +64,10 @@ exports.sendMail = functions
       };
 
       return transporter.sendMail(sentMail, (err, info) => {
-        if (err) return res.status(500).send({ success: err });
+        if (err) return res.status(500).send({ error: err });
 
         return transporter.sendMail(ackMail, (err, info) => {
-          if (err) return res.status(500).send({ success: err });
+          if (err) return res.status(500).send({ error: err });
           return res.send({ success: true });
         });
       });
