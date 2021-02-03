@@ -66,14 +66,10 @@ exports.sendMail = functions
       };
 
       return transporter.sendMail(sentMail, (err, info) => {
-        if (err) {
-          return res.send({ success: err });
-        }
-
+        if (err) return res.status(500).send({ success: err });
+        
         return transporter.sendMail(ackMail, (err, info) => {
-          if (err) {
-            return res.send({ success: err });
-          }
+          if (err) return res.status(500).send({ success: err });
           return res.send({ success: true });
         });
       });
