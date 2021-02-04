@@ -7,45 +7,29 @@ const dotenv = require("dotenv");
 dotenv.config();
 admin.initializeApp();
 
-let auth = {
-  user: process.env.USER,
-  refreshToken: process.env.REFRESH_TOKEN,
-  accessToken: process.env.ACCESS_TOKEN,
-  expires: new Date().getTime() + 2000
-};
-
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     type: "OAuth2",
-    user: process.env.USER,
+    user: process.env.EMAIL_USER,
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-    accessToken: process.env.ACCESS_TOKEN
+    refreshToken: process.env.REFRESH_TOKEN
+    // accessToken: process.env.ACCESS_TOKEN
   }
-});
-
-transporter.on("token", token => {
-  auth.accessToken = token.accessToken;
-  auth.expires = token.expires;
-  console.log("A new access token was generated");
-  console.log("User: %s", token.user);
-  console.log("Access Token: %s", token.accessToken);
-  console.log("Expires: %s", new Date(token.expires));
 });
 
 exports.sendMail = functions
   .region("europe-west3")
   .https.onRequest((req, res) => {
-    cors(req, res, () => {
+    cors(req, res, async () => {
       const from = req.body.from;
       const subject = req.body.subject;
       const message = req.body.message;
 
       const sentMail = {
-        from: process.env.NAME + " " + process.env.USER,
-        to: process.env.NAME + " " + process.env.USER,
+        from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_USER}>`,
+        to: `${process.env.EMAIL_NAME} <${process.env.EMAIL_USER}>`,
         subject: subject,
         html: `<p>${from} has contacted you.</p>
                <p>He said:</p>
@@ -53,7 +37,7 @@ exports.sendMail = functions
       };
 
       const ackMail = {
-        from: process.env.NAME + " " + process.env.USER,
+        from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_USER}>`,
         to: from,
         subject: "Thank you for contacting",
         html: `<p>Hey there!</p>
@@ -64,10 +48,10 @@ exports.sendMail = functions
       };
 
       return transporter.sendMail(sentMail, (err, info) => {
-        if (err) return res.status(500).send({ error: err });
+        if (err) return res.status(500).send({ error: err, level: 0 });
 
         return transporter.sendMail(ackMail, (err, info) => {
-          if (err) return res.status(500).send({ error: err });
+          if (err) return res.status(500).send({ error: err, level: 1 });
           return res.send({ success: true });
         });
       });

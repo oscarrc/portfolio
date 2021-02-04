@@ -24,3 +24,4 @@ pnpm-debug.log*
 *.sw?
 /.firebase
 ui-debug.log
+firebase-debug.log
